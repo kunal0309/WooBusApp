@@ -1,10 +1,11 @@
 // declare site public variable here
 var adminEmail = 'rashmi.srivastava@vibetechindia.com';
 var _webSiteName = "WooBus";
-var _apiBaseUrl = "http://dev.cachefi.com/api/v1/";
+//var _apiBaseUrl = "http://dev.cachefi.com/api/v1/";
+var _apiBaseUrl = "http://localhost:1337/api/v1";
+
 var _clickedMenu = "";
 var _isConfirm = false;
-var _apiBaseUrl = "";
 var _userDetails = [];
 var _currPageName = "";
 var _platform = "";
@@ -181,8 +182,101 @@ window.isValidEmailAddress = function (input) {
     return true;
 }
 
+//Be sure the user entered a numeric value
 
-
+function IsNumber(ctrlName, size, strAlert) {
+    var strFieldValue = $("#" + ctrlName + "").val();
+    if (strFieldValue.trim() == "")
+        return true;
+    for (var i = 0; i < size; i++) {
+
+        if (strFieldValue.charAt(i) != "") {
+
+            if (strFieldValue.charAt(i) < "0" || strFieldValue.charAt(i) > "9") {
+
+                if (strAlert != "")
+                    alert(strAlert)
+                $("#" + ctrlName + "").focus();
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+//Be sure the user entered a numeric value
+
+window.minLength = function (ctrlName, size, strAlert) {
+    var strFieldValue = $("#" + ctrlName + "").val();
+    if (strFieldValue.trim() == "")
+        return true;
+    var strFieldLength = strFieldValue.length;
+
+    if (strFieldLength < size) {
+        if (strAlert != "")
+            alert(strAlert)
+        $("#" + ctrlName + "").focus();
+        return false;
+    }
+    return true;
+}
+
+
+window.maxLength = function (ctrlName, size, strAlert) {
+    var strFieldValue = $("#" + ctrlName + "").val();
+    if (strFieldValue.trim() == "")
+        return true;
+    var strFieldLength = strFieldValue.length;
+
+    if (strFieldLength > size) {
+        if (strAlert != "")
+            alert(strAlert)
+        $("#" + ctrlName + "").focus();
+        return false;
+    }
+    return true;
+}
+
+/* Form Validation  */
+function ValidateForm(ctrlName, defaultVal) {
+    var inputVal = $("#" + ctrlName + "").val();
+    inputVal = inputVal.trim();
+    if (inputVal == "" || $("#" + ctrlName + "").val() == defaultVal) {
+        alert("Please enter " + defaultVal + "");
+        $("#" + ctrlName + "").focus();
+        return false;
+    }
+    return true;
+}
+
+/* Password Match Validation  */
+function ValidatePassword(ctrlPassword, ctrlConfirmPassword) {
+    if ($("#" + ctrlPassword + "").val() != $("#" + ctrlConfirmPassword + "").val()) {
+        alert("Password not matched!");
+        $("#" + ctrlConfirmPassword + "").focus();
+        return false;
+    }
+    return true;
+}
+
+function validateAlpha(ctrlName) {
+    var regex = new RegExp("^[a-zA-Z\s]+$");
+    var str = $("#" + ctrlName + "").val();
+    if (regex.test(str)) {
+        return true;
+    }
+    else {
+        alert('Please enter alphabates only');
+        $("#" + ctrlName + "").focus();
+        return false;
+    }
+}
+
+
+
+
+
 
 
 

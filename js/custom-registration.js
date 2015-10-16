@@ -4,29 +4,26 @@ var savedSearchArr = new Array();
 
 // click events
 $("#btnLogin").click(function () {
-    if (ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number") && ValidateForm("txtEmail", "email") && isValidEmailAddress("txtEmail") && ValidateForm("txtPassword", "password")) {
+    if (ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number")) {
         $(this).html("please wait...");
         GetToken();
     }
 });
 
 $("#btnRegister").click(function () {
-    if (ValidateForm("txtUserName", "user name") && maxLength("txtUserName", 12, "Please enter maximum 12 characters") && ValidateForm("txtEmail", "email") && isValidEmailAddress("txtEmail") && ValidateForm("txtPassword", "password") && ValidateForm("txtConfirmPassword", "confirm password") && ValidatePassword("txtPassword", "txtConfirmPassword") && ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number")) {
+    if (ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number")) {
         $(this).html("please wait...");
         RegisterUser();
     }    
 });
 
 function RegisterUser() {
-    var userData = {       
-        email: $("#txtEmail").val().trim(),        
-        password: $("#txtPassword").val().trim(),
+    console.log("registering users");
+    var userData = {
+        email: $("#txtEmail").val().trim(),
         name: $("#txtUserName").val().trim(),
-        is_operator: true,
-        is_admin: false,
         phonenumber: $("#txtPhoneNumber").val().trim()
     };
-
     //var userData = {
     //    name: "test",
     //    phonenumber: "4564645",
@@ -37,26 +34,17 @@ function RegisterUser() {
         
     $.ajax({
         type: 'POST',
-        url: 'http://dev.cachefi.com/api/v1/users/create',
-        data: JSON.stringify(userData),
+        url: _apiBaseUrl+'/users/create',
+        data: userData,
         contentType: 'application/x-www-form-urlencoded',             
         success: dataParserReg,
         error: ServiceError
     });
 
     function dataParserReg(data) {
-        alert(data);
-        if (data != null && data != undefined && data.message.indexOf("Email already registered") > -1) {
-            alert("rh");
-            $(this).html("Register");
-            customAlert(data.message);
-            window.location.reload();
-        }
-        else {
-            alert("Error");
-            //$("#regModule").hide();
-            //$(".result-msg").removeClass("hidden");
-        }
+        userData.pin=data.pin;
+        localStorage.userData=JSON.stringify(userData);
+        $(location).attr('href','confirmForm.html');
     }
 }
 
@@ -83,7 +71,6 @@ function GetToken() {
             //store username and password on local storage.
 
             sessionStorage.setItem("email", email);
-            sessionStorage.setItem("password", password);
             sessionStorage.setItem("phonenumber", phonenumber);
             
             localStorage.setItem("email", "");
@@ -169,95 +156,4 @@ $(document).ready(function () {
         return true;
     }
 });
-
-//Be sure the user entered a numeric value
-
-function IsNumber(ctrlName, size, strAlert) {
-    var strFieldValue = $("#" + ctrlName + "").val();
-    if (strFieldValue.trim() == "")
-        return true;
-    for (var i = 0; i < size; i++) {
-
-        if (strFieldValue.charAt(i) != "") {
-
-            if (strFieldValue.charAt(i) < "0" || strFieldValue.charAt(i) > "9") {
-
-                if (strAlert != "")
-                    alert(strAlert)
-                $("#" + ctrlName + "").focus();
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-//Be sure the user entered a numeric value
-
-window.minLength = function (ctrlName, size, strAlert) {
-    var strFieldValue = $("#" + ctrlName + "").val();
-    if (strFieldValue.trim() == "")
-        return true;
-    var strFieldLength = strFieldValue.length;
-
-    if (strFieldLength < size) {
-        if (strAlert != "")
-            alert(strAlert)
-        $("#" + ctrlName + "").focus();
-        return false;
-    }
-    return true;
-}
-
-
-window.maxLength = function (ctrlName, size, strAlert) {
-    var strFieldValue = $("#" + ctrlName + "").val();
-    if (strFieldValue.trim() == "")
-        return true;
-    var strFieldLength = strFieldValue.length;
-
-    if (strFieldLength > size) {
-        if (strAlert != "")
-            alert(strAlert)
-        $("#" + ctrlName + "").focus();
-        return false;
-    }
-    return true;
-}
-
-/* Form Validation  */
-function ValidateForm(ctrlName, defaultVal) {
-    var inputVal = $("#" + ctrlName + "").val();
-    inputVal = inputVal.trim();
-    if (inputVal == "" || $("#" + ctrlName + "").val() == defaultVal) {
-        alert("Please enter " + defaultVal + "");
-        $("#" + ctrlName + "").focus();
-        return false;
-    }
-    return true;
-}
-
-/* Password Match Validation  */
-function ValidatePassword(ctrlPassword, ctrlConfirmPassword) {
-    if ($("#" + ctrlPassword + "").val() != $("#" + ctrlConfirmPassword + "").val()) {
-        alert("Password not matched!");
-        $("#" + ctrlConfirmPassword + "").focus();
-        return false;
-    }
-    return true;
-}
-
-function validateAlpha(ctrlName) {
-    var regex = new RegExp("^[a-zA-Z\s]+$");
-    var str = $("#" + ctrlName + "").val();
-    if (regex.test(str)) {
-        return true;
-    }
-    else {
-        alert('Please enter alphabates only');
-        $("#" + ctrlName + "").focus();
-        return false;
-    }
-}
 

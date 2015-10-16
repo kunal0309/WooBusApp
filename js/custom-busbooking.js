@@ -7,7 +7,12 @@ $("#btnBooking").click(function () {
     }
 });
 
+
 $(document).ready(function () {
+    //toggle visibility of journey data based whether customer is in a bus or not
+    getState();
+    setInterval(getState,10000);
+
     $("[id*=txtFrom]").keyup(function (e) {
         getCityArray(this);
 
@@ -27,6 +32,40 @@ function getCityArray(cityObject) {
         availableTags = GetCity(keyword, cityObject);
     }
 }
+function getState(){
+    $.ajax({
+        method: 'GET',
+        headers:{
+            Authorization:localStorage.token
+        },
+        url: _apiBaseUrl + '/users/protected/state',
+        success: function (data) {
+            if(data.in_bus){
+                $("#travelPage").show();
+            }else{
+                $("#travelPage").hide();
+            }
+        },
+        error: ServiceError
+    });
+}
+function getRouteData(){
+    $.ajax({
+        method: 'GET',
+        headers:{
+            Authorization:localStorage.token
+        },
+        url: _apiBaseUrl + '/route/currentRoute',
+        success: function (data) {
+            if(data.in_bus){
+                $("#travelPage").show();
+            }else{
+                $("#travelPage").hide();
+            }
+        },
+        error: ServiceError
+    });
+}
 
 function GetCity(keyword, cityObject) {
     
@@ -35,8 +74,8 @@ function GetCity(keyword, cityObject) {
         minLength: 1,
         source: function (request, response) {           
             $.ajax({
-                url:  _apiBaseUrl + '/api/v1/protected/autocomplete?q=',
-                data: JSON.stringify(citykeyword),
+                type:"GET",
+                url:  _apiBaseUrl + '/api/v1/protected/autocomplete?q='+citykeyword,
                 dataType: "json",
                 contentType: 'application/json',
                 success: function (data) {
