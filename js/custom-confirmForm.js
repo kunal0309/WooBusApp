@@ -8,6 +8,7 @@ $("#btnPinConfirm").click(function () {
     }
 });
 $("#txtPinNumber").val(JSON.parse(localStorage.userData).pin);
+
 function confirmPin(){
     $.ajax({
         type: 'POST',

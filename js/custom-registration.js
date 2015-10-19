@@ -18,20 +18,13 @@ $("#btnRegister").click(function () {
 });
 
 function RegisterUser() {
-    console.log("registering users");
+    //console.log("registering users");
     var userData = {
-        email: $("#txtEmail").val().trim(),
-        name: $("#txtUserName").val().trim(),
+        //email: $("#txtEmail").val().trim(),
+        //name: $("#txtUserName").val().trim(),
         phonenumber: $("#txtPhoneNumber").val().trim()
     };
-    //var userData = {
-    //    name: "test",
-    //    phonenumber: "4564645",
-    //    password: "123456",
-    //    is_operator: true,
-    //    is_admin: false
-    //};
-        
+           
     $.ajax({
         type: 'POST',
         url: _apiBaseUrl+'/users/create',
@@ -42,14 +35,15 @@ function RegisterUser() {
     });
 
     function dataParserReg(data) {
-        userData.pin=data.pin;
+        userData.pin = data.pin;
         localStorage.userData=JSON.stringify(userData);
-        $(location).attr('href','confirmForm.html');
+        //$(location).attr('href','confirmForm.html');  
+        window.location.href = "confirmForm.html";
     }
 }
 
 // get the token after authorization
-function GetToken() {
+function GetToken() {   
     var loginData = {
         email: email,
         password: password,
@@ -67,8 +61,11 @@ function GetToken() {
     });
 
     function dataParserToken(data) {
+      
         if (data != null || data != undefined) {
             //store username and password on local storage.
+
+            alert(data);
 
             sessionStorage.setItem("email", email);
             sessionStorage.setItem("phonenumber", phonenumber);
@@ -88,6 +85,7 @@ function GetToken() {
 
     function TokeError(xhr) {
         var errorMsg = JSON.parse(xhr.responseText);
+      
         //if (errorMsg.error_description == "This is not a valid user") {
         //    $(".btn-submit").html("Login");
         //    $("#result-password").val("")
@@ -117,28 +115,12 @@ function GetUser() {
 
     function dataParserUser(data) {
         var newData1 = JSON.stringify(data);
-        sessionStorage.setItem('user_details', newData1);
-        var newData = JSON.parse(sessionStorage.getItem('user_details'));
-        //alert(newData.registrationPending);
 
-        //if (sessionStorage["savedSearch"] != null && sessionStorage["savedSearch"] != "" && sessionStorage["savedSearch"] != undefined) {
-        //    SavedPropertySearch();
-        //} else {
-        //    window.location.href = "myaccount-landing.html";
-        //}
-        //if (newData.registrationPending) {
-        //    if (sessionStorage["savedSearch"] != null && sessionStorage["savedSearch"] != "") {
-        //        SavedPropertySearch();
-        //    } else {
-        //        window.location.href = "myaccount-landing.html";
-        //    }
-        //}
-        //else {
-        //    $("#error").addClass("error");
-        //    $("#error").removeClass("hidden");
-        //    $("#error").html("You have not activated your account yet.To activate your account follow the link you received via email when you registered.If you have not seen the email, please check your Spam or Junk folder.");
-        //    $(".btn-submit").html("Login");
-        //}
+        alert(newData1);
+
+        sessionStorage.setItem('user_details', newData1);
+        var newData = JSON.parse(sessionStorage.getItem('user_details'));        
+         window.location.href = "profile.html";       
     }
 }
 

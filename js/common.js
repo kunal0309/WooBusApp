@@ -1,8 +1,8 @@
 // declare site public variable here
 var adminEmail = 'rashmi.srivastava@vibetechindia.com';
 var _webSiteName = "WooBus";
-//var _apiBaseUrl = "http://dev.cachefi.com/api/v1/";
-var _apiBaseUrl = "http://localhost:1337/api/v1";
+var _apiBaseUrl = "http://dev.cachefi.com/api/v1/";
+//var _apiBaseUrl = "http://localhost:1337/api/v1";
 
 var _clickedMenu = "";
 var _isConfirm = false;
