@@ -11,8 +11,61 @@ $("#btnBooking").click(function () {
 $(document).ready(function () {
     //toggle visibility of journey data based whether customer is in a bus or not
     getState();
-    setInterval(getState,10000);
+    setInterval(getState,20000);
+    $("#txtFrom").autocomplete({
+        source:function(req,res){
+            $.ajax({
+                method: 'GET',
+                headers:{
+                    Authorization:localStorage.token
+                },
+                url: _apiBaseUrl + '/protected/autocomplete?q='+req.term,
+                success: function (data) {
+                    console.log(data);
+                    res(data);
+                },
+                error: ServiceError
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+            console.log(ui);
+        },
 
+        html: true, // optional (jquery.ui.autocomplete.html.js required)
+
+        // optional (if other layers overlap autocomplete list)
+        open: function(event, ui) {
+            $(".ui-autocomplete").css("z-index", 1000);
+        }
+    });
+    $("#txtTo").autocomplete({
+        source:function(req,res){
+            $.ajax({
+                method: 'GET',
+                headers:{
+                    Authorization:localStorage.token
+                },
+                url: _apiBaseUrl + '/protected/autocomplete?q='+req.term,
+                success: function (data) {
+                    console.log(data);
+                    res(data);
+                },
+                error: ServiceError
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+            console.log(ui);
+        },
+        html: false, // optional (jquery.ui.autocomplete.html.js required)
+
+        // optional (if other layers overlap autocomplete list)
+        open: function(event, ui) {
+            $(".ui-autocomplete").css("z-index", 1000);
+        }
+    });
+    $( "#txtDate" ).datepicker();
     $("[id*=txtFrom]").keyup(function (e) {
         getCityArray(this);
 
@@ -41,7 +94,7 @@ function getState(){
         url: _apiBaseUrl + '/users/protected/state',
         success: function (data) {
             if(data.in_bus){
-                $("#travelPage").show();
+                $(location).attr('href','myjourney.html');
             }else{
                 $("#travelPage").hide();
             }
