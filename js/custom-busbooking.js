@@ -76,7 +76,7 @@ $(document).ready(function () {
         }
     });
 });
-
+ 
 function getCityArray(cityObject) {
     var keyword = $(cityObject).val();
     if (keyword.length >= autoCompleteMin) {
