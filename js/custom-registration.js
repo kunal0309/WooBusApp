@@ -1,6 +1,5 @@
 ﻿var email = "", password = "", phonenumber = "";
 var loginFailMsg = "Invalid username or password - please try again.";
-var savedSearchArr = new Array();
 
 // click events
 $("#btnLogin").click(function () {
@@ -44,46 +43,31 @@ function RegisterUser() {
 
 // get the token after authorization
 function GetToken() {   
-    var loginData = {
-        email: email,
-        password: password,
-        phonenumber: phonenumber
+    var loginData = {       
+        phonenumber: $("#txtPhoneNumber").val().trim()
     };
 
     $.ajax({
-        type: 'POST',
-        url: _apiBaseUrl + '/token',
-        data: loginData,
-        contentType: 'application/x-www-form-urlencoded',
+        method: 'GET',
+        headers: {
+            Authorization: localStorage.token
+        },
+        url: _apiBaseUrl + '/users/protected/info',
+        data: loginData,        
         dataType: "json",
         success: dataParserToken,
-        error: TokeError
+        error: TokenError
     });
 
     function dataParserToken(data) {
       
         if (data != null || data != undefined) {
-            //store username and password on local storage.
-
-            alert(data);
-
-            sessionStorage.setItem("email", email);
-            sessionStorage.setItem("phonenumber", phonenumber);
-            
-            localStorage.setItem("email", "");
-            localStorage.setItem("password", "");
-            localStorage.setItem("phonenumber", "");
-
-            sessionStorage.setItem('access_token', data.access_token);
-            sessionStorage.setItem('token_type', data.token_type);
-            sessionStorage.setItem('expires_in', data.expires_in);
-
-            //  now get the user details after authorization
-            GetUser();
+            //store username and password on local storage.            
+            window.location.href("home.html");
         }
     }
 
-    function TokeError(xhr) {
+    function TokenError(xhr) {
         var errorMsg = JSON.parse(xhr.responseText);
       
         //if (errorMsg.error_description == "This is not a valid user") {

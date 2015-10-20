@@ -1,4 +1,4 @@
-var cityname="", autoCompleteMin = 0;
+var searchfrom = "", searchto = "", searchdate = "";
 
 $("#btnBooking").click(function () {
     if (ValidateForm("txtFrom", "from") && ValidateForm("txtTo", "to") && ValidateForm("txtDate", "date")) {
@@ -10,8 +10,8 @@ $("#btnBooking").click(function () {
 
 $(document).ready(function () {
     //toggle visibility of journey data based whether customer is in a bus or not
-    getState();
-    setInterval(getState,20000);
+    //getState();
+    //setInterval(getState,20000);
     $("#txtFrom").autocomplete({
         source:function(req,res){
             $.ajax({
@@ -20,11 +20,23 @@ $(document).ready(function () {
                     Authorization:localStorage.token
                 },
                 url: _apiBaseUrl + '/protected/autocomplete?q='+req.term,
+                //success: function (data) {
+                //    console.log(data);
+                //    res(data);
+                //},
+                //error: ServiceError
+
                 success: function (data) {
-                    console.log(data);
-                    res(data);
+                    var availableTags = new Array();
+
+                    $.each(data, function (i, item) {                       
+                        availableTags.push($.parseJSON('{"label": "' + item + '" }'));
+                    });
+
+                    res(availableTags);
                 },
                 error: ServiceError
+
             });
         },
         minLength: 3,
@@ -39,6 +51,7 @@ $(document).ready(function () {
             $(".ui-autocomplete").css("z-index", 1000);
         }
     });
+
     $("#txtTo").autocomplete({
         source:function(req,res){
             $.ajax({
@@ -48,8 +61,13 @@ $(document).ready(function () {
                 },
                 url: _apiBaseUrl + '/protected/autocomplete?q='+req.term,
                 success: function (data) {
-                    console.log(data);
-                    res(data);
+                    var availableTags = new Array();
+
+                    $.each(data, function (i, item) {
+                        availableTags.push($.parseJSON('{"label": "' + item + '" }'));
+                    });
+
+                    res(availableTags);
                 },
                 error: ServiceError
             });
@@ -65,17 +83,60 @@ $(document).ready(function () {
             $(".ui-autocomplete").css("z-index", 1000);
         }
     });
-    $( "#txtDate" ).datepicker();
-    $("[id*=txtFrom]").keyup(function (e) {
-        getCityArray(this);
 
-        var code = e.keyCode || e.which;
-        if (code == 13) {
-            e.preventDefault();          
-            return false;
-        }
-    });
+    $("#txtDate").datepicker();
+
+    //$("[id*=txtFrom]").keyup(function (e) {
+    //    getCityArray(this);
+
+    //    var code = e.keyCode || e.which;
+    //    if (code == 13) {
+    //        e.preventDefault();          
+    //        return false;
+    //    }
+    //});
 });
+
+function BusBooking() {
+    var searchData = {
+        searchfrom: $("#txtFrom").val().trim(),
+        searchto: $("#txtTo").val().trim(),
+        searchdate: $("#txtDate").val().trim()
+    };
+
+    $.ajax({
+        method: 'GET',
+        headers: {
+            Authorization: localStorage.token
+        },
+        url: _apiBaseUrl + '/protected/buses?start=' + searchfrom + '&end=' + searchto + '&date=' + searchdate,
+        data: searchData,
+        dataType: "json",
+        success: dataParserBooking,
+        error: bookingError
+    });
+
+    function dataParserBooking(data) {
+
+        if (data != null || data != undefined) {      
+            $(".search-from").html(searchData.searchfrom);
+            $(".search-to").html(searchData.searchto);
+            $("#travelPage").show();
+            //window.location.href("myjourney.html");
+        }
+    }
+
+    function bookingError(xhr) {
+        var errorMsg = JSON.parse(xhr.responseText);
+
+        //if (errorMsg.error_description == "This is not a valid user") {
+        //    $(".btn-submit").html("Login");
+        //    $("#result-password").val("")
+        //    $("#reqPassword").removeClass("hidden");
+        //    $("#reqPassword").html(loginFailMsg);
+        //}
+    }
+}
  
 function getCityArray(cityObject) {
     var keyword = $(cityObject).val();
@@ -85,6 +146,7 @@ function getCityArray(cityObject) {
         availableTags = GetCity(keyword, cityObject);
     }
 }
+
 function getState(){
     $.ajax({
         method: 'GET',
@@ -102,6 +164,7 @@ function getState(){
         error: ServiceError
     });
 }
+
 function getRouteData(){
     $.ajax({
         method: 'GET',
