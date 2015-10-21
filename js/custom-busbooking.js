@@ -109,33 +109,27 @@ function BusBooking() {
         headers: {
             Authorization: localStorage.token
         },
-        url: _apiBaseUrl + '/protected/buses?start=' + searchfrom + '&end=' + searchto + '&date=' + searchdate,
+        url: _apiBaseUrl + '/protected/buses?start=' + searchData.searchfrom + '&end=' + searchData.searchto + '&date=' + searchData.searchdate,
         data: searchData,
         dataType: "json",
-        success: dataParserBooking,
-        error: bookingError
+        success: dataParserBookingDetails,
+        error: ServiceError
     });
 
-    function dataParserBooking(data) {
+    function dataParserBookingDetails(data) {
+        if (data != null || data != undefined) {                     
+            $.each(data, function (i, item) {
+                $(".search-from").html(item.route.start);
+                $(".search-to").html(item.route.end);
+                $(".distance_km").html(item.route.distance);
+                $(".distance_hr").html(item.route.time_taken);
 
-        if (data != null || data != undefined) {      
-            $(".search-from").html(searchData.searchfrom);
-            $(".search-to").html(searchData.searchto);
+                scheduledstops(item.route.boarding_points, item.route.scheduled_stops);
+            });
+
             $("#travelPage").show();
-            //window.location.href("myjourney.html");
         }
-    }
-
-    function bookingError(xhr) {
-        var errorMsg = JSON.parse(xhr.responseText);
-
-        //if (errorMsg.error_description == "This is not a valid user") {
-        //    $(".btn-submit").html("Login");
-        //    $("#result-password").val("")
-        //    $("#reqPassword").removeClass("hidden");
-        //    $("#reqPassword").html(loginFailMsg);
-        //}
-    }
+    }   
 }
  
 function getCityArray(cityObject) {
@@ -145,6 +139,21 @@ function getCityArray(cityObject) {
         keyword = extractLast(keyword);
         availableTags = GetCity(keyword, cityObject);
     }
+}
+
+function scheduledstops(boardPoints, stopPoints) {
+
+    $.each(boardPoints, function (i, itemBoard) {
+        $(".strip ul").append('<li><a href="#"><i class="fa fa-map-marker position_show capitalname" data-toggle="tooltip" data-placement="top" title=' + encodeURIComponent(itemBoard.point) + '></i></a></li>');
+        
+    });
+
+
+    $.each(stopPoints, function (i, itemStop) {
+        $(".strip ul").append('<li><a href="#"><i class="fa fa fa-cutlery position_show capitalname" data-toggle="tooltip" data-placement="top" title=' + encodeURIComponent(itemStop.name) + '></i></a></li>');
+    });
+   
+    $(".strip ul").append('<li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>');
 }
 
 function getState(){

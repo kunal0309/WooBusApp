@@ -1,326 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<title>Woobus</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
-<!-- Fonts -->
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
-<link href="css/nivo-lightbox.css" rel="stylesheet" type="text/css" />
-<link href="css/default.css" rel="stylesheet" type="text/css" />
-<link href="css/animate.css" rel="stylesheet" type="text/css" />
-<!--theme CSS -->
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/default2.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Woobus</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+    <link href="css/nivo-lightbox.css" rel="stylesheet" type="text/css" />
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+    <link href="css/animate.css" rel="stylesheet" type="text/css" />
+    <!--theme CSS -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/default2.css" rel="stylesheet" type="text/css" />
 </head>
 <style>
-body {
-	background:#fff;
-}
+    body {
+        background: #fff;
+    }
 </style>
-<body data-spy="scroll"> 
-<div class="container">
-  <ul id="gn-menu" class="gn-menu-main">
-    <li class="gn-trigger"> <a class="gn-icon-menu"><i class="fa fa-bars"></i></a>
-      <nav class="gn-menu-wrapper">
-        <div class="gn-scroller">
-          <ul class="gn-menu">
-              <div class="text-center" style="color:#FFFFFF;"><img src="images/user.png" class="img-circle"><br>
-                User Name</div>
-                 <li> <a href="Home.html">&nbsp;<i class="fa fa-home"></i>&nbsp;Home</a> </li>
-              <li> <a href="profile.html">&nbsp;<i class="fa fa-user"></i>&nbsp;User Profile</a> </li>
-              <li> <a href="entertainment.html">&nbsp;<i class="fa fa-music "></i>&nbsp;Entertainment</a> </li>
-              <li> <a href="myjourney.html">&nbsp;<i class="fa fa-map-marker"></i>&nbsp;My Journey</a> </li>
-              <li> <a href="">&nbsp;<i class="fa fa-question-circle"></i>&nbsp;Help</a> </li>
-            </ul>
-        </div>
-        <!-- /gn-scroller -->
-      </nav>
-    </li>
-    <li>
-      <ul class="company-social">
-        
-      </ul>
-    </li>
-  </ul>
-  <div class="clearfix"></div>
-  <div class="margin-top"></div>
-  <div class="clearfix"></div>
-  <div class="row">
-    <p class="text-center mainhead" >My Journey</p>
-  </div>
-  <div class="clearfix"> </div>
-</div>
-<div class="container">
-    <div class="box_rout">
-      <div class="col-xs-6">
-        <p class="from">From</p>
-        <p class="from"><i class="fa fa-map-marker map"></i><span class="pla">Delhi</span> 
-      </div>
-      </p>
-      <div class="col-xs-6">
-        <p class="to">To</p>
-        <p class="to"><span class="pla">Faridabad</span> <i class="fa fa-map-marker map"></i>
-      </div>
-      </p>
-      
-      <a  href="#"><i class="fa fa-map-marker position_show_main" data-toggle="tooltip" data-placement="top" title="Your Position"></i></a>
-     <a data-toggle="modal" data-target="#myModal1" href="#"><i class="fa fa fa-cutlery position_show_main1" data-toggle="tooltip" data-placement="top" title="Restaurants"></i></a>
-      <a  data-toggle="modal" data-target="#myModal2"href="#"><i class="fa fa-h-square position_show_main2" data-toggle="tooltip" data-placement="top" title="Hospital"></i></a>
-       <a data-toggle="modal" data-target="#myModal3" href="#"><i class="fa fa fa-cutlery position_show_main4" data-toggle="tooltip" data-placement="top" title="Restaurant"></i></a>
-       <a data-toggle="modal" data-target="#myModal" href="#"><i class="fa fa-building-o position_show_main3" data-toggle="tooltip" data-placement="top" title="Mall"></i></a>
-      <nav class="strip">
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>
+<body data-spy="scroll">
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main">
+            <li class="gn-trigger"><a class="gn-icon-menu"><i class="fa fa-bars"></i></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+                            <div class="text-center" style="color: #FFFFFF;">
+                                <img src="images/user.png" class="img-circle"><br>
+                                User Name
+                            </div>
+                            <li><a href="Home.html">&nbsp;<i class="fa fa-home"></i>&nbsp;Home</a> </li>
+                            <li><a href="profile.html">&nbsp;<i class="fa fa-user"></i>&nbsp;User Profile</a> </li>
+                            <li><a href="entertainment.html">&nbsp;<i class="fa fa-music "></i>&nbsp;Entertainment</a> </li>
+                            <li><a href="myjourney.html">&nbsp;<i class="fa fa-map-marker"></i>&nbsp;My Journey</a> </li>
+                            <li><a href="">&nbsp;<i class="fa fa-question-circle"></i>&nbsp;Help</a> </li>
+                        </ul>
+                    </div>
+                    <!-- /gn-scroller -->
+                </nav>
+            </li>
+            <li>
+                <ul class="company-social">
+                </ul>
+            </li>
         </ul>
-      </nav>
-      <div class="col-xs-6"> <span class="distance_home">250 Km to go</span> </div>
-      <div class="col-xs-6"> <span class="distance_home">5.20 Hours to go</span> </div>
-      <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="margin-top"></div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <p class="text-center mainhead">My Journey</p>
+        </div>
+        <div class="clearfix"></div>
     </div>
- 
-  </div>
-<div class="container">
-  
-  <div class="inner_button">
-    <div class="col-xs-4 border-r"><a href="#"> <i class="fa fa-dot-circle-o "></i>
-      <p>Request To Stop</p>
-      </a></div>
-    <div class="col-xs-4 border-r"><a href="entertainment.html"> <i class="fa fa-music widtg"></i>
-      <p>Entertainment </p>
-      </a></div>
-    <div class="col-xs-4 border-r remo"><a href="#"> <i class="fa fa-book widtg third"></i>
-      <p>Travel Guide</p>
-      </a></div>
-    <div class="col-xs-4 border-r boredr-b"><a data-toggle="modal" data-target="#myModal4" href="#"><i class="fa fa-briefcase widtg fourth"></i>
-      <p>Accessories</p>
-      </a> </div>
-    <div class="col-xs-4 border-r boredr-b"><a href="Home.html"> <i class="fa fa-pencil-square-o"></i>
-      <p>Booking Form</p>
-      </a></div>
-  </div>
-</div>
-<!-- Button trigger modal -->
+    <div class="container">
+        <div class="box_rout">
+            <div class="col-xs-6">
+                <p class="from">From</p>
+                <p class="from">
+                    <i class="fa fa-map-marker map"></i><span class="pla">Delhi</span>
+            </div>
+            </p>
+      <div class="col-xs-6">
+          <p class="to">To</p>
+          <p class="to">
+              <span class="pla">Faridabad</span> <i class="fa fa-map-marker map"></i>
+      </div>
+            </p>
+      
+      <a href="#"><i class="fa fa-map-marker position_show_main" data-toggle="tooltip" data-placement="top" title="Your Position"></i></a>
+            <a data-toggle="modal" data-target="#myModal1" href="#"><i class="fa fa fa-cutlery position_show_main1" data-toggle="tooltip" data-placement="top" title="Restaurants"></i></a>
+            <a data-toggle="modal" data-target="#myModal2" href="#"><i class="fa fa-h-square position_show_main2" data-toggle="tooltip" data-placement="top" title="Hospital"></i></a>
+            <a data-toggle="modal" data-target="#myModal3" href="#"><i class="fa fa fa
+           -cutlery position_show_main4"
+                data-toggle="tooltip" data-placement="top" title="Restaurant"></i></a>
+            <a data-toggle="modal" data-target="#myModal" href="#"><i class="fa fa-building-o position_show_main3" data-toggle="tooltip" data-placement="top" title="Mall"></i></a>
+            <nav class="strip">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>
+                </ul>
+            </nav>
+            <div class="col-xs-6"><span class="distance_home">250 Km to go</span> </div>
+            <div class="col-xs-6"><span class="distance_home">5.20 Hours to go</span> </div>
+            <div class="clearfix"></div>
+        </div>
 
-<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Accessories </h4>
-      </div>
-      <div class="modal-body">
-       
-       <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td><img src="images/eye.png"></td>
-          <td><div class="checkbox"> <label><input type="checkbox"></label> Eye masks</div></td>
-        </tr>
-         <tr>
-          <td><img src="images/blan.png"></td>
-          <td><div class="checkbox"><label><input type="checkbox"></label>Blankets</div></td>
-        </tr>
-        <tr>
-          <td><img src="images/ear.png"></td>
-          <td><div class="checkbox"><label><input type="checkbox"></label>Ear Phones</div></td>
-        </tr>
-        <tr>
-          <td><img src="images/bag.png"></td>
-          <td><div class="checkbox"><label><input type="checkbox"></label>Puke Bags</div></td>
-        </tr>
-      </tbody>
-    </table>
-      </div>
-      <div class="modal-footer">
-      	<div class="col-xs-12">
-        	<div class="form-group">
-        	<button type="button" class="btn btn-primary">Request to Accessories</button>
+    </div>
+    <div class="container">
+
+        <div class="inner_button">
+            <div class="col-xs-4 border-r">
+                <a href="#"><i class="fa fa-dot-circle-o "></i>
+                    <p>Request To Stop</p>
+                </a>
+            </div>
+            <div class="col-xs-4 border-r">
+                <a href="entertainment.html"><i class="fa fa-music widtg"></i>
+                    <p>Entertainment </p>
+                </a>
+            </div>
+            <div class="col-xs-4 border-r remo">
+                <a href="#"><i class="fa fa-book widtg third"></i>
+                    <p>Travel Guide</p>
+                </a>
+            </div>
+            <div class="col-xs-4 border-r boredr-b">
+                <a data-toggle="modal" data-target="#myModal4" href="#"><i class="fa fa-briefcase widtg fourth"></i>
+                    <p>Accessories</p>
+                </a>
+            </div>
+            <div class="col-xs-4 border-r boredr-b">
+                <a href="Home.html"><i class="fa fa-pencil-square-o"></i>
+                    <p>Booking Form</p>
+                </a>
             </div>
         </div>
-        
-      </div>
     </div>
-  </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Mall</h4>
-      </div>
-      <div class="modal-body">
-       <img src="images/mall.jpg">
-       <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td>Name</td>
-          <td>City Mall</td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
-        </tr>
-        <tr>
-          <td>ETA</td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-      </div>
-      <div class="modal-footer">
-      	<div class="col-xs-12">
-        	<div class="form-group">
-        	<button type="button" class="btn btn-primary">Request to Stop</button>
+    <!-- Button trigger modal -->
+
+    <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Accessories </h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="images/eye.png"></td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"></label>
+                                        Eye masks
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/blan.png"></td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"></label>Blankets
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/ear.png"></td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"></label>Ear Phones
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="images/bag.png"></td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"></label>Puke Bags
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary">Request to Accessories</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        
-      </div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Restaurants</h4>
-      </div>
-      <div class="modal-body">
-       <img src="images/map.jpg">
-       <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td>Name</td>
-          <td>Cuisine varities</td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
-        </tr>
-        <tr>
-          <td>ETA</td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-      </div>
-      <div class="modal-footer">
-      	<div class="col-xs-12">
-        	<div class="form-group">
-        	<button type="button" class="btn btn-primary">Request to Stop</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Mall</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="images/mall.jpg">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>City Mall</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
+                            </tr>
+                            <tr>
+                                <td>ETA</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary">Request to Stop</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        
-      </div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Hospital</h4>
-      </div>
-      <div class="modal-body">
-       <img src="images/hos.jpg">
-       <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td>Name</td>
-          <td>Max Hospital</td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
-        </tr>
-        <tr>
-          <td>ETA</td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-      </div>
-      <div class="modal-footer">
-      	<div class="col-xs-12">
-        	<div class="form-group">
-        	<button type="button" class="btn btn-primary">Request to Stop</button>
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Restaurants</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="images/map.jpg">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>Cuisine varities</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
+                            </tr>
+                            <tr>
+                                <td>ETA</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary">Request to Stop</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        
-      </div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Restaurants</h4>
-      </div>
-      <div class="modal-body">
-       <img src="images/map.jpg">
-       <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td>Name</td>
-          <td>Cuisine varities</td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
-        </tr>
-        <tr>
-          <td>ETA</td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-      </div>
-      <div class="modal-footer">
-      	<div class="col-xs-12">
-        	<div class="form-group">
-        	<button type="button" class="btn btn-primary">Request to Stop</button>
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Hospital</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="images/hos.jpg">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>Max Hospital</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
+                            </tr>
+                            <tr>
+                                <td>ETA</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary">Request to Stop</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        
-      </div>
     </div>
-  </div>
-</div>
-<!-- Core JavaScript Files -->
-<script src="js/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/classie.js"></script>
-<script src="js/gnmenu.js"></script>
-<script src="js/jquery.scrollTo.js"></script>
-<script src="js/nivo-lightbox.min.js"></script>
-<script src="js/stellar.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="js/custom.js"></script>
-<script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Restaurants</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="images/map.jpg">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>Cuisine varities</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </td>
+                            </tr>
+                            <tr>
+                                <td>ETA</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary">Request to Stop</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Core JavaScript Files -->
+    <script src="js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/gnmenu.js"></script>
+    <script src="js/jquery.scrollTo.js"></script>
+    <script src="js/nivo-lightbox.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/custom.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 </body>
 </html>

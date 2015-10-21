@@ -1,11 +1,17 @@
-﻿var email = "", password = "", phonenumber = "";
+﻿var email = "", password = "", phonenumber = "", secretKey ="";
 var loginFailMsg = "Invalid username or password - please try again.";
 
 // click events
 $("#btnLogin").click(function () {
     if (ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number")) {
         $(this).html("please wait...");
-        GetToken();
+
+        if (localStorage.expiry != "undefined" || localStorage.expiry != undefined || localStorage.expiry != "") {
+            GetToken();
+        }
+        else {
+            GetRenewToken();
+        }
     }
 });
 
@@ -46,7 +52,7 @@ function GetToken() {
     var loginData = {       
         phonenumber: $("#txtPhoneNumber").val().trim()
     };
-
+   
     $.ajax({
         method: 'GET',
         headers: {
@@ -56,26 +62,38 @@ function GetToken() {
         data: loginData,        
         dataType: "json",
         success: dataParserToken,
-        error: TokenError
+        error: ServiceError
     });
 
     function dataParserToken(data) {
-      
         if (data != null || data != undefined) {
             //store username and password on local storage.            
             window.location.href("home.html");
         }
-    }
+    }   
+}
 
-    function TokenError(xhr) {
-        var errorMsg = JSON.parse(xhr.responseText);
-      
-        //if (errorMsg.error_description == "This is not a valid user") {
-        //    $(".btn-submit").html("Login");
-        //    $("#result-password").val("")
-        //    $("#reqPassword").removeClass("hidden");
-        //    $("#reqPassword").html(loginFailMsg);
-        //}
+function GetRenewToken() {
+    var loginData = {
+        secretKey: localStorage.secret
+    };
+
+    $.ajax({
+        method: 'POST',
+        headers: {
+            Authorization: localStorage.token
+        },
+        url: _apiBaseUrl + '/users/protected/renew',
+        data: loginData,
+        dataType: "json",
+        success: dataParserToken,
+        error: ServiceError
+    });
+
+    function dataParserToken(data) {
+        if (data != null || data != undefined) {                     
+            window.location.href("home.html");
+        }
     }
 }
 
