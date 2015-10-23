@@ -22,7 +22,7 @@ var _windowHeight = $(window).height();
 document.addEventListener("deviceready", onDeviceReady, false);
 
 $(document).ready(function () {
-        
+
     // check if the app open or mobile browser
     _isApp = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
 
@@ -272,8 +272,6 @@ function validateAlpha(ctrlName) {
         return false;
     }
 }
-
-
 
 
 

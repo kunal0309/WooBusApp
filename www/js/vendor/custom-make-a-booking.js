@@ -109,7 +109,7 @@ function BusBooking() {
         headers: {
             Authorization: localStorage.token
         },
-        url: _apiBaseUrl + '/protected/buses?start=' + searchData.searchfrom + '&end=' + searchData.searchto + '&date=' + searchData.searchdate,
+        url: _apiBaseUrl + '/buses?start=' + searchData.searchfrom + '&end=' + searchData.searchto + '&date=' + searchData.searchdate,
         data: searchData,
         dataType: "json",
         success: dataParserBookingDetails,
@@ -144,16 +144,19 @@ function getCityArray(cityObject) {
 function scheduledstops(boardPoints, stopPoints) {
 
     $.each(boardPoints, function (i, itemBoard) {
-        $(".strip ul").append('<li><a href="#"><i class="fa fa-map-marker position_show capitalname" data-toggle="tooltip" data-placement="top" title=' + encodeURIComponent(itemBoard.point) + '></i></a></li>');
+        //$("ul").append('<li><a href="#"><i class="fa fa-map-marker position_show capitalname" data-toggle="tooltip" data-placement="top" title=' + encodeURIComponent(itemBoard.point) + '></i></a></li>');
+
+        $(".strip ul").append('<li><a href="#"><i class="fa fa-map-marker position_show_main" data-toggle="tooltip" data-placement="top" title="Your Position"></i></a></li>');
         
     });
 
-
     $.each(stopPoints, function (i, itemStop) {
-        $(".strip ul").append('<li><a href="#"><i class="fa fa fa-cutlery position_show capitalname" data-toggle="tooltip" data-placement="top" title=' + encodeURIComponent(itemStop.name) + '></i></a></li>');
+        //$("ul").append('<li><a href="#"><i class="fa fa fa-cutlery position_show capitalname" data-toggle="tooltip" data-placement="top" title=' + encodeURIComponent(itemStop.name) + '></i></a></li>');
+        //$(".strip ul").append('<li><a href="#"><i class="fa fa-map-marker position_show_main" data-toggle="tooltip" data-placement="top" title="Your Position1"></i></a></li>');
     });
    
-    $(".strip ul").append('<li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>');
+    //$(".strip ul").append('<li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>');
+    //$(".strip ul").append('<li><a href="#"><i class="fa fa-map-marker position_show_main" data-toggle="tooltip" data-placement="top" title="Your Position"></i></a></li>');
 }
 
 function getState(){
