@@ -1,9 +1,14 @@
-var searchfrom = "", searchto = "", searchdate = "";
+var searchfrom = "", searchto = "", searchdate = "", isTwelveRow, centreSeat = "", oldseatvalue = "", oldSelectSeat = "";
+var seatNumbers = [];
+var seatNumbersArray = new Array;
 
-$("#btnBooking").click(function () {
+var selectedSeatNumber = [];
+var selectedSeatArray = new Array;
+
+$("#btnSearch").click(function () {
     if (ValidateForm("txtFrom", "from") && ValidateForm("txtTo", "to") && ValidateForm("txtDate", "date")) {
         $(this).html("please wait...");
-        BusBooking();
+        BusSearching();
     }
 });
 
@@ -97,7 +102,7 @@ $(document).ready(function () {
     //});
 });
 
-function BusBooking() {
+function BusSearching() {
     var searchData = {
         searchfrom: $("#txtFrom").val().trim(),
         searchto: $("#txtTo").val().trim(),
@@ -112,11 +117,11 @@ function BusBooking() {
         url: _apiBaseUrl + '/buses?start=' + searchData.searchfrom + '&end=' + searchData.searchto + '&date=' + searchData.searchdate,
         data: searchData,
         dataType: "json",
-        success: dataParserBookingDetails,
+        success: dataParserSearchingDetails,
         error: ServiceError
     });
 
-    function dataParserBookingDetails(data) {
+    function dataParserSearchingDetails(data) {
         if (data != null || data != undefined) {
             $.each(data, function (i, item) {
                 $(".search-from").html(item.route.start);
@@ -125,7 +130,9 @@ function BusBooking() {
                 $(".distance_hr").html(item.route.time_taken);
                 $(".price").html("From Rs. " + item.route.fare);
 
-                scheduledstops(item.route.boarding_points, item.route.scheduled_stops);
+                ScheduledStops(item.route.boarding_points, item.route.scheduled_stops, item._id);
+
+                SeatDetails(item.total_seats, item.seats);
             });
 
             $("#travelPage").show();
@@ -133,42 +140,37 @@ function BusBooking() {
     }
 }
 
-function getCityArray(cityObject) {
-    var keyword = $(cityObject).val();
-    if (keyword.length >= autoCompleteMin) {
-        var availableTags = new Array();
-        keyword = extractLast(keyword);
-        availableTags = GetCity(keyword, cityObject);
-    }
-}
+function ScheduledStops(boardPoints, stopPoints, busId) {
 
-function scheduledstops(boardPoints, stopPoints) {
+    $("#myTabs").html("");
+    $("#routedetails").html("");
 
-    $(".strip").html("");
-    $(".modal-body").html("");
+    sessionStorage.setItem('busid', busId);
 
     $.each(boardPoints, function (i, itemBoard) {
         $("#myTabs").append('<li><a href="javascript:void(0);"><i class="fa fa-map-marker position_show" data-toggle="tooltip" data-placement="top" title="' + itemBoard.point + '"></i></a></li>');
-    });    
+        //$(".strip ul").append('<li><a href="javascript:void(0);"><i class="fa fa-map-marker position_show" data-toggle="tooltip" data-placement="top" title="' + itemBoard.point + '"></i></a></li>');
+    });
 
     $.each(stopPoints, function (i, itemStop) {
-        $(".strip ul").append('<li><a data-toggle="modal" data-target="#popupmodel" href="#"><i class="fa fa fa-cutlery position_show" data-toggle="tooltip" data-placement="top" title="' + itemStop.name + '"></i></a></li>');
 
-        $(".modelHeading").html(itemStop.name);
-        $(".modal-body").append('' + '<img src="images/map.jpg">' +
+        //$(".strip ul").append('<li><a data-toggle="modal" data-target="#popupmodel" href="#"><i class="fa fa fa-cutlery position_show" data-toggle="tooltip" data-placement="top" title="' + itemStop.name + '"></i></a></li>');
+        $("#myTabs").append('<li><a data-toggle="modal" data-target="#popupmodel" href="#"><i class="fa fa fa-cutlery position_show" data-toggle="tooltip" data-placement="top" title="' + itemStop.name + '"></i></a></li>');
+
+        $("#modelHeading").html(itemStop.name);
+        $("#routedetails").append('' + '<img src="images/map.jpg">' +
                    '<table class="table table-striped"><tbody><tr><td>Location</td><td>' +
-                    itemStop.location + '</td></tr><tr><td>Loo Available</td><td>' + GetItem(itemStop.is_loo) + '</td></tr><tr><td>Food Available</td><td>' +
-                    GetItem(itemStop.is_food) + '</td></tr><tr><td>Restaurant Available</td><td>' +itemStop.restaurants_available + '</td></tr>'
+                    itemStop.location + '</td></tr><tr><td>Loo Available</td><td>' + SetItem(itemStop.is_loo) + '</td></tr><tr><td>Food Available</td><td>' +
+                    SetItem(itemStop.is_food) + '</td></tr><tr><td>Restaurant Available</td><td>' + itemStop.restaurants_available + '</td></tr>'
                     + '</tbody></table>'
                    );
-
     });
 
     $(".strip ul").append('<li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>');
     $('[data-toggle="tooltip"]').tooltip();
 }
 
-function GetItem(isCheckItem) {
+function SetItem(isCheckItem) {
 
     var isCheckValue = "";
 
@@ -180,6 +182,58 @@ function GetItem(isCheckItem) {
     }
 
     return isCheckValue;
+}
+
+function SeatDetails(totalSeats, seats) {
+
+    $("#seatselection").html("");
+
+    isTwelveRow = false;
+    oldseatvalue = false;
+
+    centreSeat = parseInt(totalSeats / 2) + 1;
+
+    var liElem = "";
+    var liCenterElem = "";
+    var sub_ul = "";
+
+    $.each(seats, function (i, itemSeat) {
+
+        liElem += '<li' + AvailabilityBookClass(itemSeat.is_booked) + '><a href="javascript:void(0)" id="seat_' + itemSeat.seat_no + '" class="selectseat-link"></a></li>';
+
+        if ((i + 1) > 1 && isTwelveRow == true) {
+
+            if (centreSeat == i + 1) {
+
+                liCenterElem += '<li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li>' + liElem;
+
+                sub_ul = $('<ul/>').addClass('seataligncenter').append(liCenterElem);
+                $("#seatselection").append(sub_ul);
+                oldseatvalue = true;
+                liCenterElem = "";
+                liElem = "";
+            }
+        }
+
+        if (oldseatvalue) {
+            if ((i + 1) > 1 && ((i + 1) % 12) == 1) {
+
+                isTwelveRow = true;
+                sub_ul = $('<ul/>').addClass('seatalign').append(liElem);
+                $("#seatselection").append(sub_ul);
+                liElem = "";
+            }
+        }
+        else {
+            if ((i + 1) > 1 && ((i + 1) % 12) == 0) {
+
+                isTwelveRow = true;
+                sub_ul = $('<ul/>').addClass('seatalign').append(liElem);
+                $("#seatselection").append(sub_ul);
+                liElem = "";
+            }
+        }
+    });
 }
 
 function getState() {
@@ -218,65 +272,6 @@ function getRouteData() {
     });
 }
 
-function GetCity(keyword, cityObject) {
-
-    $(cityObject).catcomplete({
-        delay: 800,
-        minLength: 1,
-        source: function (request, response) {
-            $.ajax({
-                type: "GET",
-                url: _apiBaseUrl + '/api/v1/protected/autocomplete?q=' + citykeyword,
-                dataType: "json",
-                contentType: 'application/json',
-                success: function (data) {
-                    var availableTags = new Array();
-
-                    // suburb list
-                    $.each(data, function (i, item) {
-                        alert(item);
-                        //if (getProcessedParamVal(item.Postcode) == "" && item.SuburbName != "" && item.SuburbName != null && item.SuburbName != undefined) {
-                        //    availableTags.push($.parseJSON('{"label": "' + item.SuburbName + ' (' + item.ListingCount + ')", "value": "' + item.SuburbName + '#suburb", "id": ' + item.SuburbId + ', "category":"Suburb"}'));
-
-                        //}
-                    });
-
-                    response(availableTags);
-                },
-                error: function () { }
-            });
-        },
-        focus: function () {
-            // prevent value inserted on focus
-            return false;
-        },
-        select: function (event, ui) {
-
-            //if (ui.item.value.indexOf("#suburb") > 0) {
-            //    ui.item.value = ui.item.value.substr(0, ui.item.value.indexOf("#suburb"));
-            //}
-
-            //var terms = split(this.value);
-            //// remove the current input
-            //terms.pop();
-            //// add the selected item
-            //terms.push(ui.item.value);
-            //// add placeholder to get the comma-and-space at the end
-            //terms.push("");
-            //this.value = terms.join("; ");
-
-            //hideKeyboard();
-            //return false;
-        }
-    });
-
-    $(subObject).bind("keydown", function (event) {
-        if (event.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) {
-            event.preventDefault();
-        }
-    })
-}
-
 /* Form Validation  */
 function ValidateForm(ctrlName, defaultVal) {
     var inputVal = $("#" + ctrlName + "").val();
@@ -287,5 +282,143 @@ function ValidateForm(ctrlName, defaultVal) {
         return false;
     }
     return true;
+}
+
+function AvailabilityBookClass(isSeatSelected) {
+    var seatSelected = "";
+
+    if (isSeatSelected) {
+        seatSelected = "class='active'";
+    }
+
+    return seatSelected;
+}
+
+$("#btnBookBus").click(function () {
+
+    if ($("li").hasClass("active")) {
+
+        var sessionBusId = sessionStorage.getItem('busid');
+        var sessionSeatNumber = sessionStorage.getItem('seatnumber');
+
+        if (sessionBusId != null && sessionBusId != undefined && sessionBusId != "" && sessionSeatNumber != null && sessionSeatNumber != undefined && sessionSeatNumber != "") {
+
+            seatNumbersArray = sessionSeatNumber.toString().split(',');
+
+            if (seatNumbersArray.length > 0) {
+                for (var i = 0; i < seatNumbersArray.length; i++) {
+                    seatNumbers[i] = seatNumbersArray[i];
+                }
+            }
+
+            BusBookingDetails(sessionBusId, seatNumbers);
+        }
+    }
+    else {
+        alert("Please select seat");
+    }
+});
+
+function BusBookingDetails(busID, seatNumbers) {
+
+    var bookingBusData = {
+        bus_id: busID,
+        seat_no: seatNumbers
+    };
+
+    //alert(bookingBusData.seat_no);
+
+    $.ajax({
+        method: 'POST',
+        headers: {
+            Authorization: localStorage.token
+        },
+        url: _apiBaseUrl + '/protected/book',
+        data: bookingBusData,
+        dataType: "json",
+        success: dataParserBookingDetails,
+        error: ServiceError
+    });
+
+    function dataParserBookingDetails(data) {
+        alert(JSON.stringify(data));
+        if (data != null || data != undefined) {
+            alert("Your bus booking details saved successfully !");
+            //window.location.href = "MyJourney.html";
+        }
+    }
+}
+
+$(document).on('click', '.selectseat-link', function () {
+
+    $("#selectedSeat").html("");
+
+    var seatNumber = this.id;
+
+    if ($("#" + seatNumber + "").parent().hasClass("active") == true) {
+        $("#" + seatNumber + "").parent().removeClass("active");
+
+        seatNumber = seatNumber.replace('seat_', '');
+        oldSelectSeat = RemoveSelectedSeat(oldSelectSeat, seatNumber);
+    }
+    else {
+        $("#" + seatNumber + "").parent().addClass("active");
+
+        seatNumber = seatNumber.replace('seat_', '');
+        oldSelectSeat = AddSelectedSeat(oldSelectSeat, seatNumber);        
+    }
+   
+    //seatNumber = seatNumber.replace('seat_', '');
+    //oldSelectSeat = CommaSeparatedString(oldSelectSeat, seatNumber);
+    sessionStorage.setItem('seatnumber', oldSelectSeat);
+
+    $("#selectedSeat").html(oldSelectSeat);
+});
+
+function AddSelectedSeat(oldStr, newStr) {
+
+    //if (oldStr.indexOf(newStr) !== -1) {
+    //    if (oldStr.indexOf((',' + newStr)) !== -1) {
+    //        oldStr = oldStr.replace((',' + newStr), "");
+    //    }
+    //    if (oldStr.indexOf(",") == -1)
+    //    {
+    //        oldStr = oldStr.replace(newStr, "");
+    //    }
+    //    else {
+    //        oldStr = oldStr.replace((newStr + ','), "");
+    //    }
+
+    if (oldStr != undefined && oldStr != "") {
+        oldStr = oldStr + ", " + newStr + ", ";
+    }
+    else {
+        oldStr = newStr + ",";
+    }
+    return oldStr.replace(/,\s*$/, "");
+}
+
+function RemoveSelectedSeat(oldStr, newStr) {
+    if (oldStr != undefined && oldStr != "") {
+        if (oldStr.indexOf(newStr) !== -1) {          
+            if (oldStr.indexOf(newStr) !== -1) {
+                oldStr = oldStr.replace((',' + newStr), "");              
+            }
+            if (oldStr.indexOf(",") == -1) {
+                oldStr = oldStr.replace(newStr, "");
+            }
+
+            else {
+                oldStr = oldStr.replace((newStr + ','), "");
+            }
+        }        
+        //else {
+        //    oldStr = oldStr + "," + newStr + ",";
+        //}
+    }
+    //else {
+    //    oldStr = newStr + ",";
+    //}
+    return oldStr.replace(/,\s*$/, "");
 }
 

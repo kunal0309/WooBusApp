@@ -3,20 +3,15 @@ $(document).ready(function () {
 });
 
 function GetUserDetails() {
-
-    var token = sessionStorage.getItem("access_token");
-
-    var headers = {};
-    if (token) {
-        headers.Authorization = 'Bearer ' + token;
-    }
-
     $.ajax({
+        method: 'GET',
+        headers: {
+            Authorization: localStorage.token
+        },
         type: 'GET',
-        url: _apiBaseUrl + '/api/v1/users/protected/info',
+        url: _apiBaseUrl + '/users/protected/info',
         contentType: 'application/json',
-        dataType: "json",
-        headers: headers,
+        dataType: "json",      
         success: dataParserGetUser,
         error: ServiceError
     });
@@ -40,14 +35,11 @@ $(".journey").click(function () {
 
 function GetJourneyDetails() {
 
-    var token = sessionstorage.getitem("access_token");
-
-    var headers = {};
-    if (token) {
-        headers.authorization = 'bearer ' + token;
-    }
-
     $.ajax({
+        method: 'GET',
+        headers: {
+            Authorization: localStorage.token
+        },
         type: 'GET',
         url: _apiBaseUrl + '/api/v1/users/protected/state',
         contentType: 'application/json',
@@ -69,9 +61,8 @@ function populateUserJourneyDetail(data) {
         $(".journey-info").append('' +
                 '<div>' +
                 '<table width="100%" border="0"><tr><td>' +
-                '<div class="name">' + item.FirstName + ' ' + item.LastName + '</div>' +
-                '<span class="user-name">@' + item.UserName + '</span></td>' +
-                '<td><a href="#"><img src="images/edit-profile-icon.png"></a></td></tr>' +
+                '<div class="name">' + item.phonenumber + '</div>' +
+                '</td></tr>' +
                 '</table></div><div style="clear:both;"></div>'
                 );
     });

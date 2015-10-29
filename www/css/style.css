@@ -1040,6 +1040,13 @@ padding: 5px;}
 .modal-body p {padding:5px; line-height: 19px;}
 .header_logo {width: 47px; padding: 7px;}
 .distance_home {color: #FFF; font-weight: bold; text-align: center; display: block;}
+
+.modal-footer {
+clear: both;
+    padding: 15px;
+    text-align: right;
+    border-top: 0px solid #E5E5E5;}
+
 @media (min-width:768px)
 {
 .strip li {width:9%;}
@@ -1053,3 +1060,20 @@ padding: 5px;}
 {
     text-transform:capitalize;
 }
+
+.seat {padding:20px 8px; text-align:center;}
+.seat .seatalign li {list-style:none; display:inline-block; border:1px solid #ccc; padding:5px; width: 6%; height: 26px; margin:2px;}
+.seat .seatalign li.active {list-style:none; display:inline-block; border:1px solid #ccc; padding:5px; width: 6%; height: 26px; background:red;}
+.seat .seatalign {padding:0px; margin-bottom:0px; margin-top:1px;}
+.seat  .seataligncenter li  { list-style:none; display:inline-block;  padding:5px; width: 6%; height:26px;}
+.seat  .seataligncenter li:last-child {border:1px solid #ccc;}
+.seat  .seataligncenter {margin-bottom:0px; padding:0px; margin-top:1px; height:26px; margin-bottom: 5px;}
+.markposition {padding:10px;}
+.markposition .inter {padding:0px;}
+.markposition .inter li {list-style:none; display:inline-block; padding:5px; border:1px solid #ccc;}
+.inter span {font-size:12px; padding:0px 5px;}
+.markposition .inter li:nth-child(1) {background:#00b9f5;}
+.markposition .inter li:nth-child(3) {background:#ccc;}
+.markposition .inter li:nth-child(5) {background:#7ed321;}
+.markposition .inter li:nth-child(7) {background:#E84F4F;}
+.subcontent {font-size:13px;}

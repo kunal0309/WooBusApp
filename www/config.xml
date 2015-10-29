@@ -3,7 +3,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.woobus.app"
-        version   = "1.7">
+        version   = "1.0">
 
   <name>Woo Bus</name>
   <description>
@@ -42,6 +42,8 @@
   <gap:plugin name="org.apache.cordova.contacts" />
 
   <!--<gap:plugin name="com.pushwoosh.plugins.pushwoosh" />-->
+
+  <gap:plugin name="nl.x-services.plugins.videocaptureplus" />
 
   <gap:config-file platform="ios" parent="UIStatusBarHidden">
     <true/>
