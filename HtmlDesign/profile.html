@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>My Profile</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+<!-- Fonts -->
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+<link href="css/nivo-lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link href="css/animate.css" rel="stylesheet" type="text/css" />
+<!--theme CSS -->
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/default2.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#editProfile").click(function(){
+        $("#contenthide").toggle();
+		$(".profileedit").toggle();
+    });
+});
+</script>
+</head>
+<body data-spy="scroll">
+<div class="container">
+  <ul id="gn-menu" class="gn-menu-main">
+      <li class="gn-trigger"> <a class="gn-icon-menu"><i class="fa fa-bars"></i></a>
+     <!-- <li><a href="home.html"><img class="header_logo" src="images/inner_logo.png"></a></li>-->
+        <nav class="gn-menu-wrapper">
+          <div class="gn-scroller">
+            <ul class="gn-menu">
+              <div class="text-center" style="color:#FFFFFF;"><img src="images/user.png" class="img-circle"><br>
+                User Name</div>
+                 <li> <a href="Home.html">&nbsp;<i class="fa fa-home"></i>&nbsp;Home</a> </li>
+              <li> <a href="profile.html">&nbsp;<i class="fa fa-user"></i>&nbsp;User Profile</a> </li>
+              <li> <a href="Entertantment.html">&nbsp;<i class="fa fa-music "></i>&nbsp;Enetertanment</a> </li>
+              <li> <a href="my_journey.html">&nbsp;<i class="fa fa-map-marker"></i>&nbsp;My Journey</a> </li>
+              <li> <a href="">&nbsp;<i class="fa fa-question-circle"></i>&nbsp;Help</a> </li>
+            </ul>
+          </div>
+          <!-- /gn-scroller -->
+        </nav>
+      </li>
+      <li>
+        <ul class="company-social">
+         
+        </ul>
+      </li>
+    </ul>
+  <div class="clearfix"></div>
+  <div class="margin-top"></div>
+  <div class="row profile-img-bg text-center"><p class="text-center mainhead">User Profile</p> <img src="images/user.png" class="img-circle"><span class="profileedit"><input type="file" value="Upload Profile Pic" title="Upload Profile Pic"></span>
+    <h3>User Name</h3>
+   
+    <div id="editProfile" class="circle"><i class="fa fa-plus"></i></div>
+  </div>
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#menu1">PROFILE</a></li>
+     
+      <li><a data-toggle="tab" href="#menu3">Jounery Details</a></li>
+    </ul>
+    <div class="tab-content" id="contenthide">
+      <div id="menu1" class="tab-pane fade in active">
+        <ul>
+          <li><i class="fa fa-phone"></i>&nbsp;9999999999</li>
+          <li><i class="fa fa-envelope-o"></i>&nbsp;info@something.com</li>
+          <li><i class="fa fa-user"></i>&nbsp;Vibetechindia</li>
+        </ul>
+      </div>
+      
+      <div id="menu3" class="tab-pane fade">
+        <ul>
+          <li>ACHIEVMENTS goes here....</li>
+          <li>ACHIEVMENTS goes here....</li>
+          <li>ACHIEVMENTS goes here....</li>
+        </ul>
+      </div>
+    </div>
+    <div class="profileedit">
+      <form>
+              <div class="form-group">
+                <div class="col-lg-6">
+                  <div class="input-group"> <span class="input-group-addon">
+                    <div class="circle"><i class="fa fa-phone"></i></div>
+                    </span>
+                    <input type="text" class="form-control" aria-label="..." placeholder="Phone Number" requied>
+                  </div>
+                  <!-- /input-group -->
+                </div>
+                <!-- /.col-lg-6 -->
+              </div>
+              <div class="form-group">
+                <div class="col-lg-6">
+                  <div class="input-group"> <span class="input-group-addon">
+                    <div class="circle"><i class="fa fa-envelope"></i></div>
+                    </span>
+                    <input type="text" class="form-control" aria-label="..." placeholder="Email Address" requied>
+                  </div>
+                  <!-- /input-group -->
+                </div>
+                <!-- /.col-lg-6 -->
+              </div>
+              <div class="form-group">
+                <div class="col-lg-6">
+                  <div class="input-group"> <span class="input-group-addon">
+                    <div class="circle"><i class="fa fa-user"></i></div>
+                    </span>
+                    <input type="text" class="form-control" aria-label="..." placeholder="User Name">
+                  </div>
+                  <!-- /input-group -->
+                </div>
+                <!-- /.col-lg-6 -->
+              </div>
+              <div class="form-group">
+                <div class="col-lg-6">
+                  <input value="Confirm" class="btn" type="button">
+                  <!-- /input-group -->
+                </div>
+                <!-- /.col-lg-6 -->
+              </div>
+            </form>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<!-- Core JavaScript Files -->
+<script src="js/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/gnmenu.js"></script>
+<script src="js/jquery.scrollTo.js"></script>
+<script src="js/nivo-lightbox.min.js"></script>
+<script src="js/stellar.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="js/custom.js"></script>
+</body>
+</html>

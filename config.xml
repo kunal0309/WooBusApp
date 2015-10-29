@@ -3,7 +3,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.woobus.app"
-        version   = "1.7">
+        version   = "1.0">
 
   <name>Woo Bus</name>
   <description>
@@ -23,7 +23,7 @@
   <gap:plugin name="org.apache.cordova.media-capture" />
   <gap:plugin name="org.apache.cordova.console" />
   <gap:plugin name="org.apache.cordova.contacts" />
-  <gap:plugin name="org.apache.cordova.device" />
+  <!--<gap:plugin name="org.apache.cordova.device" />-->
   <gap:plugin name="org.apache.cordova.device-motion" />
   <gap:plugin name="org.apache.cordova.device-orientation" />
   <gap:plugin name="org.apache.cordova.dialogs" />
@@ -42,6 +42,8 @@
   <gap:plugin name="org.apache.cordova.contacts" />
 
   <!--<gap:plugin name="com.pushwoosh.plugins.pushwoosh" />-->
+
+  <gap:plugin name="nl.x-services.plugins.videocaptureplus" />
 
   <gap:config-file platform="ios" parent="UIStatusBarHidden">
     <true/>
@@ -91,9 +93,9 @@
   <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="res_Android/screen/android/screen-hdpi-portrait.png" />
   <gap:splash gap:platform="android" gap:qualifier="port-xhdpi" src="res_Android/screen/android/screen-xhdpi-portrait.png" />
 
-  <!--<gap:splash gap:platform="ios" height="480" src="res/screen/ios/screen-iphone-portrait.png" width="320" />
+  <gap:splash gap:platform="ios" height="480" src="res/screen/ios/screen-iphone-portrait.png" width="320" />
   <gap:splash gap:platform="ios" height="960" src="res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
-  <gap:splash gap:platform="ios" height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />-->
+  <gap:splash gap:platform="ios" height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
   <gap:splash gap:platform="winphone" src="res/screen/windows-phone/splash.png" />
 
   <platform name="wp8">
