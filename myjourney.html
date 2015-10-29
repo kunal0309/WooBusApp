@@ -59,12 +59,12 @@ body {
     <div class="box_rout">
       <div class="col-xs-6">
         <p class="from">From</p>
-        <p class="from"><i class="fa fa-map-marker map"></i><span class="pla">Delhi</span> 
+        <p class="from"><i class="fa fa-map-marker map"></i><span class="pla" id="from">Delhi</span>
       </div>
       </p>
       <div class="col-xs-6">
         <p class="to">To</p>
-        <p class="to"><span class="pla">Faridabad</span> <i class="fa fa-map-marker map"></i>
+        <p class="to"><span class="pla" id="to">Faridabad</span> <i class="fa fa-map-marker map"></i>
       </div>
       </p>
       
@@ -88,8 +88,8 @@ body {
           <li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>
         </ul>
       </nav>
-      <div class="col-xs-6"> <span class="distance_home">250 Km to go</span> </div>
-      <div class="col-xs-6"> <span class="distance_home">5.20 Hours to go</span> </div>
+      <div class="col-xs-6"> <span class="distance_home" id="distance">250 Km to go</span> </div>
+      <div class="col-xs-6"> <span class="distance_home" id="time taken">5.20 Hours to go</span> </div>
       <div class="clearfix"></div>
     </div>
  
@@ -308,6 +308,7 @@ body {
 </div>
 <!-- Core JavaScript Files -->
 <script src="js/jquery.min.js"></script>
+<script src="js/moment.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/jquery.easing.min.js"></script>
 <script src="js/classie.js"></script>
@@ -316,7 +317,9 @@ body {
 <script src="js/nivo-lightbox.min.js"></script>
 <script src="js/stellar.js"></script>
 <!-- Custom Theme JavaScript -->
+<script src="js/common.js"></script>
 <script src="js/custom.js"></script>
+<script src="js/custom-journey.js"></script>
 <script>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
