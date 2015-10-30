@@ -119,6 +119,7 @@ var playlist = [
 
 //Scott Andrew’s HTML5 audio player
 var aud = $('#jukebox .aud').get(0);
+var vid = $("#dvVideo video").get(0);
 aud.pos = -1;
 
 $('#jukebox .play').bind('click', function (evt) {
@@ -131,6 +132,7 @@ $('#jukebox .play').bind('click', function (evt) {
 });
 
 $(".target").click(function (evt) {
+    vid.pause();
     evt.preventDefault();
     if (aud.pos == playlist.length) aud.pos = 0;
     aud.pos = $(this).data("tab-id");

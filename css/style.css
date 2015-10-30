@@ -936,7 +936,7 @@ input:-moz-placeholder { color:#fff !important; }
 .box_rout p {padding-left: 11px; font-size: 18px; color: rgb(255, 255, 255);}
 /*.map {padding-left:12px;}*/
 .pla {padding:10px; color:#fff;}
-.strip li {display: inline-block; margin: 20px 2px 13px; width: 8%; height: 3px; background: #FFF none repeat scroll 0% 0%;}
+.strip li {display: inline-block; margin: 20px 0px 13px; width: 8%; height: 3px; background: #FFF none repeat scroll 0% 0%;}
 .strip {clear:both;}
 .strip ul {padding-left: 18px;}
 .strip li:last-child {height:auto; background:none; width:auto;margin:20px 0px 10px; }
@@ -962,7 +962,7 @@ input:-moz-placeholder { color:#fff !important; }
 .home_box_rout {background:#EF5964;}
 .position_show {position: relative; top: -16px; right: 0;}
 .position_show_main  {position: absolute;
-top: 52%;
+top: 56%;
 right: 49%;
 width: 20px;
 height: 20px;
@@ -972,7 +972,7 @@ color: #fff;
 
 padding: 6px;}
 .position_show_main1  {position: absolute;
-top: 52.5%;
+top: 57.5%;
 right: 34%;
 width: 20px;
 height: 20px;
@@ -982,7 +982,7 @@ color: red;
 text-align: center; font-size: 10px;
 padding: 5px;}
 .position_show_main2  {position: absolute;
-top: 52.5%;
+top: 57.5%;
 right: 65%;
 width: 20px;
 height: 20px;
@@ -992,7 +992,7 @@ color: red;
 text-align: center; font-size: 10px;
 padding: 5px;}
 .position_show_main4{position: absolute;
-top: 52.5%;
+top: 57.5%;
 right: 62%;
 width: 20px;
 height: 20px;
@@ -1002,7 +1002,7 @@ color: red;
 text-align: center; font-size: 10px;
 padding: 5px;}
 .position_show_main3{position: absolute;
-top: 52.5%;
+top: 57.5%;
 right:20%;
 width: 20px;
 height: 20px;

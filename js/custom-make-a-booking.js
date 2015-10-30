@@ -124,8 +124,8 @@ function BusSearching() {
                 $("#from").html(item.route.start);
                 $("#to").html(item.route.end);
                 $("#distance").html(item.route.distance + " Kms");
-                var time_taken = moment.duration(item.route.time_taken, 'milliseconds');
-                $("#time").html(time_taken);
+                //var time_taken = moment.duration(item.route.time_taken, 'milliseconds');
+                $("#time").html(item.route.time_taken);
                 $("#price").html("From Rs. " + item.route.fare);
 
                 ScheduledStops(item.route.boarding_points, item.route.scheduled_stops, item._id);

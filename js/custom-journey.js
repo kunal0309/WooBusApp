@@ -1,8 +1,8 @@
 $(document).ready(function () {
     console.log("running");
-    getRouteDetails();
+    //getRouteDetails();
     setInterval(function () {
-        getRouteDetails();
+        //getRouteDetails();
     }, 30000);
 });
 
