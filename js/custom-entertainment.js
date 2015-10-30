@@ -1,7 +1,3 @@
-/**
- * Created by Rashmi Srivastava for movie player on 27/10/15.
- */
-
 $(document).ready(function () {
     EntertainmentDetails();
     GetAllVideo();
@@ -31,28 +27,42 @@ function GetAllAudio() {
 
 function GetAllVideo() {
     $("#dvMovieList").html("");
-    //var selectMovie = '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 1 + '"><img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 2 + '"><img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 3 + '"><img src="images/m3.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 4 + '"><img src="images/m4.jpg" alt="Image" style="max-width: 100%;" /></a>'
 
-    var selectMovie = '<div class="item active"><div class="row-fluid"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 1 + '"><img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 2 + '"><img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 3 + '"><img src="images/m3.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 4 + '"><img src="images/m4.jpg" alt="Image" style="max-width: 100%;" /></a></div></div>' +
-        '<div class="item"><div class="row-fluid"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 5 + '"><img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a>' + '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="thumbnail col-xs-3 select-thumbnail-link" id="thumbvideo_' + 6 + '"><img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a></div></div>'
+    var selectMovie = '<div class="item active">' +
+         '<div class="row-fluid"><div class="col-xs-3">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 1 + '">' +
+         '<img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a></div>' + '<div class="col-xs-3">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 2 + '">' +
+         '<img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a></div>' +
+         '<div class="col-xs-3"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 3 + '">' +
+         '<img src="images/m3.jpg" alt="Image" style="max-width: 100%;" /></a></div>' +
+         '<div class="col-xs-3">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 4 + '">' +
+         '<img src="images/m4.jpg" alt="Image" style="max-width: 100%;" /></a></div></div></div>' +
+         '<div class="item"><div class="row-fluid"><div class="col-xs-3">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 5 + '">' +
+         '<img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a></div>' +
+         '<div class="col-xs-3"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 6 + '">' +
+         '<img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a></div></div></div>';
 
     $("#dvMovieList").append(selectMovie);
 }
 
 $(document).on('click', '.select-thumbnail-link', function () {
-
+    aud.pause();
     var videoid = this.id;
     videoid = videoid.replace('thumbvideo_', '');
     PlayVideo(videoid);
 });
 
 function PlayVideo(videoId) {
- 
-    var videoFile = 'http://media.w3.org/2010/05/bunny/movie.ogv';  // videoId;
+
+    var videoFile = 'http://html5videoformatconverter.com/data/images/happyfit2.mp4';  // videoId;
 
     $("#dvVideo video").attr({
         "src": videoFile,
         "autoplay": false,
+        "height": "200px"
     })
 }
 
@@ -61,7 +71,7 @@ function EntertainmentDetails() {
     //    journeyBusId: "56043a5c361ffe41bd662044" //$("#txtFrom").val().trim()
     //};
     $.ajax({
-        method: 'GET',        
+        method: 'GET',
         url: _apiBaseUrl + '/box/media?bus_identifier=1',
         //data: journeyData,
         dataType: "json",
@@ -69,7 +79,7 @@ function EntertainmentDetails() {
         error: ServiceError
     });
 
-    function dataParserEntertainmentDetails(data) {      
+    function dataParserEntertainmentDetails(data) {
         if (data != null || data != undefined) {
             $.each(data, function (i, item) {
                 alert("rh");
@@ -107,6 +117,7 @@ var playlist = [
     }
 ];
 
+//Scott Andrew’s HTML5 audio player
 var aud = $('#jukebox .aud').get(0);
 aud.pos = -1;
 
@@ -119,7 +130,8 @@ $('#jukebox .play').bind('click', function (evt) {
     }
 });
 
-$(".target").click(function () {
+$(".target").click(function (evt) {
+    evt.preventDefault();
     if (aud.pos == playlist.length) aud.pos = 0;
     aud.pos = $(this).data("tab-id");
     aud.setAttribute('src', playlist[aud.pos].url);

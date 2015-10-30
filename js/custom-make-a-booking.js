@@ -2,9 +2,6 @@ var searchfrom = "", searchto = "", searchdate = "", isTwelveRow, centreSeat = "
 var seatNumbers = [];
 var seatNumbersArray = new Array;
 
-var selectedSeatNumber = [];
-var selectedSeatArray = new Array;
-
 $("#btnSearch").click(function () {
     if (ValidateForm("txtFrom", "from") && ValidateForm("txtTo", "to") && ValidateForm("txtDate", "date")) {
         $(this).html("please wait...");
@@ -124,11 +121,12 @@ function BusSearching() {
     function dataParserSearchingDetails(data) {
         if (data != null || data != undefined) {
             $.each(data, function (i, item) {
-                $(".search-from").html(item.route.start);
-                $(".search-to").html(item.route.end);
-                $(".distance_km").html(item.route.distance);
-                $(".distance_hr").html(item.route.time_taken);
-                $(".price").html("From Rs. " + item.route.fare);
+                $("#from").html(item.route.start);
+                $("#to").html(item.route.end);
+                $("#distance").html(item.route.distance + " Kms");
+                var time_taken = moment.duration(item.route.time_taken, 'milliseconds');
+                $("#time").html(time_taken);
+                $("#price").html("From Rs. " + item.route.fare);
 
                 ScheduledStops(item.route.boarding_points, item.route.scheduled_stops, item._id);
 
@@ -148,23 +146,29 @@ function ScheduledStops(boardPoints, stopPoints, busId) {
     sessionStorage.setItem('busid', busId);
 
     $.each(boardPoints, function (i, itemBoard) {
+
         $("#myTabs").append('<li><a href="javascript:void(0);"><i class="fa fa-map-marker position_show" data-toggle="tooltip" data-placement="top" title="' + itemBoard.point + '"></i></a></li>');
-        //$(".strip ul").append('<li><a href="javascript:void(0);"><i class="fa fa-map-marker position_show" data-toggle="tooltip" data-placement="top" title="' + itemBoard.point + '"></i></a></li>');
+
     });
 
     $.each(stopPoints, function (i, itemStop) {
 
-        //$(".strip ul").append('<li><a data-toggle="modal" data-target="#popupmodel" href="#"><i class="fa fa fa-cutlery position_show" data-toggle="tooltip" data-placement="top" title="' + itemStop.name + '"></i></a></li>');
         $("#myTabs").append('<li><a data-toggle="modal" data-target="#popupmodel" href="#"><i class="fa fa fa-cutlery position_show" data-toggle="tooltip" data-placement="top" title="' + itemStop.name + '"></i></a></li>');
 
         $("#modelHeading").html(itemStop.name);
-        $("#routedetails").append('' + '<img src="images/map.jpg">' +
+        $("#routedetails").append('' + '<div id="map-canvas" class=""></div>' +
                    '<table class="table table-striped"><tbody><tr><td>Location</td><td>' +
                     itemStop.location + '</td></tr><tr><td>Loo Available</td><td>' + SetItem(itemStop.is_loo) + '</td></tr><tr><td>Food Available</td><td>' +
                     SetItem(itemStop.is_food) + '</td></tr><tr><td>Restaurant Available</td><td>' + itemStop.restaurants_available + '</td></tr>'
                     + '</tbody></table>'
                    );
     });
+
+    initialize();
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    google.maps.event.addDomListener(window, "resize", resizingMap());
 
     $(".strip ul").append('<li><i class="fa fa-long-arrow-down"></i><i class="fa fa-long-arrow-up"></i></li>');
     $('[data-toggle="tooltip"]').tooltip();
@@ -199,7 +203,7 @@ function SeatDetails(totalSeats, seats) {
 
     $.each(seats, function (i, itemSeat) {
 
-        liElem += '<li' + AvailabilityBookClass(itemSeat.is_booked) + '><a href="javascript:void(0)" id="seat_' + itemSeat.seat_no + '" class="selectseat-link"></a></li>';
+        liElem += '<li ' + AlreadySeatBookedClass(itemSeat.seat_no, itemSeat.is_booked) + '><a href="javascript:void(0)" id="seat_' + itemSeat.seat_no + '" class="selectseat-link"></a></li>';
 
         if ((i + 1) > 1 && isTwelveRow == true) {
 
@@ -234,6 +238,17 @@ function SeatDetails(totalSeats, seats) {
             }
         }
     });
+}
+
+function AlreadySeatBookedClass(seatNumber, isSeatBooked) {
+    var seatBooked = "";
+
+    if (isSeatBooked) {
+        $("#" + seatNumber + "").addClass("booked");
+        seatBooked = "class='booked'";
+    }
+
+    return seatBooked;
 }
 
 function getState() {
@@ -282,16 +297,6 @@ function ValidateForm(ctrlName, defaultVal) {
         return false;
     }
     return true;
-}
-
-function AvailabilityBookClass(isSeatSelected) {
-    var seatSelected = "";
-
-    if (isSeatSelected) {
-        seatSelected = "class='active'";
-    }
-
-    return seatSelected;
 }
 
 $("#btnBookBus").click(function () {
@@ -365,11 +370,9 @@ $(document).on('click', '.selectseat-link', function () {
         $("#" + seatNumber + "").parent().addClass("active");
 
         seatNumber = seatNumber.replace('seat_', '');
-        oldSelectSeat = AddSelectedSeat(oldSelectSeat, seatNumber);        
+        oldSelectSeat = AddSelectedSeat(oldSelectSeat, seatNumber);
     }
-   
-    //seatNumber = seatNumber.replace('seat_', '');
-    //oldSelectSeat = CommaSeparatedString(oldSelectSeat, seatNumber);
+
     sessionStorage.setItem('seatnumber', oldSelectSeat);
 
     $("#selectedSeat").html(oldSelectSeat);
@@ -377,20 +380,8 @@ $(document).on('click', '.selectseat-link', function () {
 
 function AddSelectedSeat(oldStr, newStr) {
 
-    //if (oldStr.indexOf(newStr) !== -1) {
-    //    if (oldStr.indexOf((',' + newStr)) !== -1) {
-    //        oldStr = oldStr.replace((',' + newStr), "");
-    //    }
-    //    if (oldStr.indexOf(",") == -1)
-    //    {
-    //        oldStr = oldStr.replace(newStr, "");
-    //    }
-    //    else {
-    //        oldStr = oldStr.replace((newStr + ','), "");
-    //    }
-
     if (oldStr != undefined && oldStr != "") {
-        oldStr = oldStr + ", " + newStr + ", ";
+        oldStr = oldStr + "," + newStr + ",";
     }
     else {
         oldStr = newStr + ",";
@@ -399,26 +390,74 @@ function AddSelectedSeat(oldStr, newStr) {
 }
 
 function RemoveSelectedSeat(oldStr, newStr) {
+
     if (oldStr != undefined && oldStr != "") {
-        if (oldStr.indexOf(newStr) !== -1) {          
-            if (oldStr.indexOf(newStr) !== -1) {
-                oldStr = oldStr.replace((',' + newStr), "");              
+        if (oldStr.indexOf(newStr) !== -1) {
+
+            var splitStr = oldStr.split(',');
+
+            if (oldStr.indexOf((',' + newStr)) !== -1) {
+                oldStr = oldStr.replace((',' + newStr), "");
             }
-            if (oldStr.indexOf(",") == -1) {
+            if (splitStr.length == 1) {
                 oldStr = oldStr.replace(newStr, "");
             }
-
             else {
                 oldStr = oldStr.replace((newStr + ','), "");
             }
-        }        
-        //else {
-        //    oldStr = oldStr + "," + newStr + ",";
-        //}
+        }
     }
-    //else {
-    //    oldStr = newStr + ",";
-    //}
+
     return oldStr.replace(/,\s*$/, "");
 }
 
+
+var map;
+var myCenter;
+var marker;
+
+
+function initialize() {
+    myCenter = new google.maps.LatLng(51.219987, 4.396237),
+
+     marker = new google.maps.Marker({
+         position: myCenter
+     });
+
+    var mapProp = {
+        center: myCenter,
+        zoom: 14,
+        draggable: false,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapProp);
+    marker.setMap(map);
+
+    google.maps.event.addListener(marker, 'click', function () {
+
+        infowindow.setContent(contentString);
+        infowindow.open(map, marker);
+
+    });
+};
+
+
+$('#popupmodel').on('show.bs.modal', function () {
+    //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+    resizeMap();
+})
+
+function resizeMap() {
+    if (typeof map == "undefined") return;
+    setTimeout(function () { resizingMap(); }, 400);
+}
+
+function resizingMap() {
+    if (typeof map == "undefined") return;
+    var center = map.getCenter();
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(center);
+
+}

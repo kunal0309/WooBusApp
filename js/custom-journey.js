@@ -1,4 +1,10 @@
-var email = "", password = "", phonenumber = "";
+$(document).ready(function () {
+    console.log("running");
+    getRouteDetails();
+    setInterval(function () {
+        getRouteDetails();
+    }, 30000);
+});
 
 function getRouteDetails() {
     var token = sessionStorage.getItem("access_token");
@@ -12,11 +18,11 @@ function getRouteDetails() {
         url: _apiBaseUrl + '/route/currentRoute',
         dataType: "json",
         headers: headers,
-        success: dataParserUser,
+        success: dataParserRoute,
         error: ServiceError
     });
 
-    function dataParserUser(data) {
+    function dataParserRoute(data) {
         var journeyData= JSON.stringify(data);
         var data=JSON.parse(journeyData);
         console.log(data.start);
@@ -31,11 +37,10 @@ function getRouteDetails() {
     }
 }
 
-$(document).ready(function () {
-    console.log("running");
-    getRouteDetails();
-setInterval(function(){
-    getRouteDetails();
-},30000);
+$("#btnStop").click(function () {
+    
 });
 
+$("#btnAccessories").click(function () {
+
+});

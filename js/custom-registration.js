@@ -24,7 +24,7 @@ $("#btnRegister").click(function () {
 });
 
 function RegisterUser() {
-    //console.log("registering users");
+    console.log("registering users");
     var userData = {
         //email: $("#txtEmail").val().trim(),
         //name: $("#txtUserName").val().trim(),

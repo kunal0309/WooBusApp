@@ -2954,7 +2954,8 @@
         );
     }
 
-    function makeAs (alias) {
+    function makeAs(alias) {
+
         return function () {
             return this.as(alias);
         };
