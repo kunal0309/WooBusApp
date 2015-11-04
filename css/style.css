@@ -548,7 +548,7 @@ margin-bottom: 5px;
 	text-align:center;
 }
 .profileedit input[type="text"] {
-	color:#E52F3C !important;
+	/*color:#E52F3C !important;*/
 }
 .nav-tabs > li > a:hover {
 	background-color: transparent;
@@ -1105,4 +1105,15 @@ clear: both;
     position: absolute;
     top: 13%;
     left: 3%;
+}
+.message {
+    background: #FFFFFF;
+   
+    margin: 10px 0px 0px 0px;
+    padding: 15px 0px;
+    text-align: center;
+    color: #231C1C;
+}
+
+.message span{ font-weight:bold; font-size:13px;    
 }

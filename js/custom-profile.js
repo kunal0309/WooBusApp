@@ -1,69 +1,77 @@
 $(document).ready(function () {
+    CheckLogin();
     GetUserDetails();
 });
 
-function GetUserDetails() {
+function GetUserDetails() {   
+   
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
-        type: 'GET',
+        
         url: _apiBaseUrl + '/users/protected/info',
-        contentType: 'application/json',
-        dataType: "json",      
-        success: dataParserGetUser,
+        dataType: "json",
+        success: dataParserGetUserProfile,
         error: ServiceError
     });
+}
 
-    function dataParserGetUser(data) {
-        populateUserDetail(data)
+function dataParserGetUserProfile(data) {
+    if (data != null && data != undefined && data != "") {
+
+        if (data.phonenumber > 0) {
+            $("#journey").hide();
+            $("#profile-info").show();
+            $("#profile-info").html('');
+            $("#profile-info").append('<li><i class="fa fa-phone" id="phoneNumber"></i>&nbsp;' + data.phonenumber + '</li>');
+        }
     }
 }
 
-function populateUserDetail(item) {
-    if (item != null && item != undefined && item != "") {
-        $(".fa-phone").html(item.phonenumber);
-        //$(".fa-envelope-o").html(item.email);
-        //$(".fa-user").html(item.name);
-    }
-}
+$("#editProfile").click(function () {
+    window.location.href = "editProfile.html";
+});
 
-$(".journey").click(function () {
+$("#profile").click(function () {
+    GetUserDetails();
+});
+
+$("#journeyDetails").click(function () {
     GetJourneyDetails();
 });
 
 function GetJourneyDetails() {
 
+    var searchJourneyData = {
+
+    };
+
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
-        type: 'GET',
-        url: _apiBaseUrl + '/api/v1/users/protected/state',
-        contentType: 'application/json',
+        url: _apiBaseUrl + '/users/protected/info',
+        data: searchJourneyData,
         dataType: "json",
-        headers: headers,
-        success: dataParserGetUserJourney,
+        success: dataParserUserJourney,
         error: ServiceError
     });
+}
 
-    function dataParserGetUserJourney(data) {
-        populateUserJourneyDetail(data)
+// Need to implement user journey method currently using same user info method 
+function dataParserUserJourney(data) {
+    if (data != null && data != undefined && data != "") {
+
+        if (data.phonenumber > 0) {
+            $("#profile-info").hide();
+            $("#journey").show();
+            $("#journey").removeClass("fade");
+            $("#journey-info").html('');
+            $("#journey-info").append('<li><i class="fa fa-phone"></i>&nbsp;' + data.phonenumber + '</li>');
+        }
     }
 }
-
-function populateUserJourneyDetail(data) {
-
-    $.each(data, function (i, item) {
-        $(".journey-info").html('');
-        $(".journey-info").append('' +
-                '<div>' +
-                '<table width="100%" border="0"><tr><td>' +
-                '<div class="name">' + item.phonenumber + '</div>' +
-                '</td></tr>' +
-                '</table></div><div style="clear:both;"></div>'
-                );
-    });
-}
+// End //

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    CheckLogin();
     console.log("running");
     //getRouteDetails();
     setInterval(function () {

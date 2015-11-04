@@ -5,15 +5,11 @@ var _apiBaseUrl = "http://dev.cachefi.com/api/v1";
 //var _apiBaseUrl = "http://localhost:1337/api/v1";
 
 var _clickedMenu = "";
-var _isConfirm = false;
+
 var _userDetails = [];
 var _currPageName = "";
 var _platform = "";
 
-var savedSearchCollectionItem = [];
-var keyword = [];
-var suburbID;
-var name = "";
 var _minMenuHeight = "";
 
 var _isApp = "";
@@ -35,11 +31,12 @@ $(document).ready(function () {
     // check current Login
     if (getProcessedParamVal(sessionStorage.getItem("user_details")) != "") {
         _userDetails = JSON.parse(sessionStorage.getItem('user_details'));
-        $(".btnLogin").html("Logout");
+        $("#btnLogin").html("Logout");
     }
-    else if (getProcessedParamVal(localStorage.getItem("username")) != "" && getProcessedParamVal(localStorage.getItem("password")) != "") { // check the local storage now
-        // if local storage available, then do Auto Login
-        AutoLoginUser();
+        //else if (getProcessedParamVal(localStorage.getItem("username")) != "" && getProcessedParamVal(localStorage.getItem("password")) != "")
+    else if (getProcessedParamVal(localStorage.getItem("phonenumber")) != "") { // check the local storage now
+        // if local storage available, then do Auto Login        
+        //AutoLoginUser();
     }
 
     // menu height min set
@@ -64,46 +61,54 @@ $('#default-back').click(function (e) {
     window.history.back(-1);
 });
 
+$('#lnkLogout').on('touchstart', function (e) {
+    e.stopPropagation();
+    localStorage.token = null;
+    localStorage.expiry = null;
+    localStorage.secret = null;
+    window.location.href = "index.html";
+});
+
 // common click events end
 
 window.DeleteUserSession = function () {
     _userDetails = [];
-    sessionStorage.setItem('user_details', "");
-    localStorage.setItem("username", "");
-    localStorage.setItem("password", "");
+    sessionStorage.setItem('user_details', "");    
     sessionStorage.setItem('access_token', "");
-    sessionStorage.setItem('token_type', "");
+    sessionStorage.setItem('token_secret', "");
     sessionStorage.setItem('expires_in', "");
 }
 
+function CheckLogin() {
+    
+    if (localStorage.token == "null" ||
+        localStorage.token == null || localStorage.token == "" || localStorage.token == undefined) {
+        window.location.href = "index.html";
+    }
+}
+
 window.AutoLoginUser = function () {
-    var username = localStorage.getItem("username");
-    var password = localStorage.getItem("password");
-
-    var loginData = {
-        grant_type: 'password',
-        username: username,
-        password: password
-    };
-
+    
     $.ajax({
-        type: 'POST',
-        url: _apiBaseUrl + '/token',
-        data: loginData,
-        contentType: 'application/x-www-form-urlencoded',
+
+        type: 'GET',
+        headers: {
+            Authorization: localStorage.token
+        },
+        url: _apiBaseUrl + '/users/protected/info',       
         dataType: "json",
         success: dataParserToken,
-        error: TokeError
+        error: ServiceError
     });
 
     function dataParserToken(data) {
         if (data != null || data != undefined) {
-            sessionStorage.setItem('access_token', data.access_token);
-            sessionStorage.setItem('token_type', data.token_type);
-            sessionStorage.setItem('expires_in', data.expires_in);
+            sessionStorage.setItem('access_token', data.token);
+            sessionStorage.setItem('token_secret', data.secret);
+            sessionStorage.setItem('expires_in', data.expiry);
 
             //  now get the user details after authorization
-            GetUser();
+            //GetUser();
         }
     }
 
@@ -111,7 +116,6 @@ window.AutoLoginUser = function () {
         var errorMsg = JSON.parse(xhr.responseText);
     }
 }
-
 
 window.ServiceError = function (xhr) {
     if (xhr.responseText) {
@@ -272,7 +276,4 @@ function validateAlpha(ctrlName) {
         return false;
     }
 }
-
-
-
 

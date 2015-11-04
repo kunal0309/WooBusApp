@@ -1,13 +1,11 @@
-﻿var email = "", password = "", phonenumber = "", secretKey ="";
+﻿var email = "", password = "", phonenumber = "", secretKey = "";
 var loginFailMsg = "Invalid username or password - please try again.";
 
 // click events
 $("#btnLogin").click(function () {
     if (ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number")) {
         $(this).html("please wait...");
-
-        if (localStorage.expiry != "undefined" || localStorage.expiry != undefined || localStorage.expiry != "") {
-            //GetRenewToken();
+        if (localStorage.expiry != "undefined" || localStorage.expiry != undefined || localStorage.expiry != "") {                 
             GetToken();
         }
         else {
@@ -20,58 +18,51 @@ $("#btnRegister").click(function () {
     if (ValidateForm("txtPhoneNumber", "phone number") && minLength("txtPhoneNumber", 3, "Please enter valid phone number") && IsNumber("txtPhoneNumber", 13, "Please enter valid phone number")) {
         $(this).html("please wait...");
         RegisterUser();
-    }    
+    }
 });
+// End 
 
 function RegisterUser() {
     console.log("registering users");
     var userData = {
-        //email: $("#txtEmail").val().trim(),
-        //name: $("#txtUserName").val().trim(),
         phonenumber: $("#txtPhoneNumber").val().trim()
     };
-           
+
     $.ajax({
         type: 'POST',
-        url: _apiBaseUrl+'/users/create',
+        url: _apiBaseUrl + '/users/create',
         data: userData,
-        contentType: 'application/x-www-form-urlencoded',             
+        contentType: 'application/x-www-form-urlencoded',
         success: dataParserReg,
         error: ServiceError
     });
 
     function dataParserReg(data) {
         userData.pin = data.pin;
-        localStorage.userData=JSON.stringify(userData);
-        //$(location).attr('href','confirmForm.html');  
+        localStorage.userData = JSON.stringify(userData);
         window.location.href = "confirmForm.html";
     }
 }
 
 // get the token after authorization
-function GetToken() {   
-    var loginData = {       
-        phonenumber: $("#txtPhoneNumber").val().trim()
-    };
-   
+function GetToken() { 
+
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
-        url: _apiBaseUrl + '/users/protected/info',
-        data: loginData,        
+        url: _apiBaseUrl + '/users/protected/info',          
         dataType: "json",
         success: dataParserToken,
         error: ServiceError
     });
 
-    function dataParserToken(data) {
-        if (data != null || data != undefined) {
-            //store username and password on local storage.            
-            window.location.href ="makeabooking.html";
+    function dataParserToken(data) {       
+        if (data != null || data != undefined && data != "") {
+            window.location.href = "makeabooking.html";
         }
-    }   
+    }
 }
 
 function GetRenewToken() {
@@ -79,10 +70,8 @@ function GetRenewToken() {
         secretKey: localStorage.secret
     };
 
-    alert(loginOldData.secretKey);
-
     $.ajax({
-        method: 'POST',
+        type: 'POST',
         headers: {
             Authorization: localStorage.token
         },
@@ -93,40 +82,10 @@ function GetRenewToken() {
         error: ServiceError
     });
 
-    function dataParserRenewToken(data) {
-        alert(data.token);
-        if (data != null || data != undefined) {                     
-            window.location.href= "makeabooking.html";
+    function dataParserRenewToken(data) {        
+        if (data != null || data != undefined && data != "") {
+            window.location.href = "makeabooking.html";
         }
-    }
-}
-
-// get the user information
-function GetUser() {
-    var token = sessionStorage.getItem("access_token");
-    var headers = {};
-    if (token) {
-        headers.Authorization = 'Bearer ' + token;
-    }
-
-    $.ajax({
-        type: 'GET',
-        url: _apiBaseUrl + '',
-        contentType: 'application/json',
-        dataType: "json",
-        headers: headers,
-        success: dataParserUser,
-        error: ServiceError
-    });
-
-    function dataParserUser(data) {
-        var newData1 = JSON.stringify(data);
-
-        alert(newData1);
-
-        sessionStorage.setItem('user_details', newData1);
-        var newData = JSON.parse(sessionStorage.getItem('user_details'));        
-         window.location.href = "profile.html";       
     }
 }
 

@@ -23,7 +23,8 @@ function confirmPin(){
         console.log(data);
         localStorage.token=data.token;
         localStorage.expiry=data.expiry;
-        localStorage.secret=data.secret;
+        localStorage.secret = data.secret;
+
         $(location).attr('href','makeabooking.html');
         //$(location).attr('href','confirmForm.html');
     }

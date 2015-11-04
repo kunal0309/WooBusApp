@@ -11,13 +11,14 @@ $("#btnSearch").click(function () {
 
 
 $(document).ready(function () {
+    CheckLogin();
     //toggle visibility of journey data based whether customer is in a bus or not
     //getState();
     //setInterval(getState,20000);
     $("#txtFrom").autocomplete({
         source: function (req, res) {
             $.ajax({
-                method: 'GET',
+                type: 'GET',
                 headers: {
                     Authorization: localStorage.token
                 },
@@ -57,7 +58,7 @@ $(document).ready(function () {
     $("#txtTo").autocomplete({
         source: function (req, res) {
             $.ajax({
-                method: 'GET',
+                type: 'GET',
                 headers: {
                     Authorization: localStorage.token
                 },
@@ -107,7 +108,7 @@ function BusSearching() {
     };
 
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
@@ -119,7 +120,7 @@ function BusSearching() {
     });
 
     function dataParserSearchingDetails(data) {
-        if (data != null || data != undefined) {
+        if (data != null || data != undefined && data != "") {
             $.each(data, function (i, item) {
                 $("#from").html(item.route.start);
                 $("#to").html(item.route.end);
@@ -253,7 +254,7 @@ function AlreadySeatBookedClass(seatNumber, isSeatBooked) {
 
 function getState() {
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
@@ -271,7 +272,7 @@ function getState() {
 
 function getRouteData() {
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
@@ -330,11 +331,9 @@ function BusBookingDetails(busID, seatNumbers) {
         bus_id: busID,
         seat_no: seatNumbers
     };
-
-    //alert(bookingBusData.seat_no);
-
+    
     $.ajax({
-        method: 'POST',
+        type: 'POST',
         headers: {
             Authorization: localStorage.token
         },
@@ -347,8 +346,8 @@ function BusBookingDetails(busID, seatNumbers) {
 
     function dataParserBookingDetails(data) {
         alert(JSON.stringify(data));
-        if (data != null || data != undefined) {
-            alert("Your bus booking details saved successfully !");
+        if (data != null || data != undefined && data != "") {
+            alert("Your bus booking details has been saved successfully !");
             //window.location.href = "MyJourney.html";
         }
     }
@@ -411,7 +410,6 @@ function RemoveSelectedSeat(oldStr, newStr) {
     return oldStr.replace(/,\s*$/, "");
 }
 
-
 var map;
 var myCenter;
 var marker;
@@ -459,5 +457,4 @@ function resizingMap() {
     var center = map.getCenter();
     google.maps.event.trigger(map, "resize");
     map.setCenter(center);
-
 }

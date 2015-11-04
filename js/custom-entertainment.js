@@ -1,11 +1,12 @@
 $(document).ready(function () {
+    CheckLogin(); 
     EntertainmentDetails();
     GetAllVideo();
 });
 
 function GetAllAudio() {
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         headers: {
             Authorization: localStorage.token
         },
@@ -17,7 +18,7 @@ function GetAllAudio() {
     });
 
     function dataParserBookingDetails(data) {
-        if (data != null || data != undefined) {
+        if (data != null || data != undefined && data != "") {
             $.each(data, function (i, item) {
 
             });
@@ -27,22 +28,22 @@ function GetAllAudio() {
 
 function GetAllVideo() {
     $("#dvMovieList").html("");
-
+   
     var selectMovie = '<div class="item active">' +
          '<div class="row-fluid"><div class="col-xs-3">' +
-         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 1 + '">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link thumbnail" id="thumbvideo_' + 1 + '">' +
          '<img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a></div>' + '<div class="col-xs-3">' +
-         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 2 + '">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link thumbnail" id="thumbvideo_' + 2 + '">' +
          '<img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a></div>' +
-         '<div class="col-xs-3"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 3 + '">' +
+         '<div class="col-xs-3"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link thumbnail" id="thumbvideo_' + 3 + '">' +
          '<img src="images/m3.jpg" alt="Image" style="max-width: 100%;" /></a></div>' +
          '<div class="col-xs-3">' +
-         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 4 + '">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link thumbnail" id="thumbvideo_' + 4 + '">' +
          '<img src="images/m4.jpg" alt="Image" style="max-width: 100%;" /></a></div></div></div>' +
          '<div class="item"><div class="row-fluid"><div class="col-xs-3">' +
-         '<a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 5 + '">' +
+         '<a data-toggle="modal" data-target="#popupplayvideo" href="#x" class="select-thumbnail-link thumbnail" id="thumbvideo_' + 5 + '">' +
          '<img src="images/m1.jpg" alt="Image" style="max-width: 100%;" /></a></div>' +
-         '<div class="col-xs-3"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link" id="thumbvideo_' + 6 + '">' +
+         '<div class="col-xs-3"><a data-toggle="modal" data-target="#popupplayvideo" href="#" class="select-thumbnail-link thumbnail" id="thumbvideo_' + 6 + '">' +
          '<img src="images/m2.jpg" alt="Image" style="max-width: 100%;" /></a></div></div></div>';
 
     $("#dvMovieList").append(selectMovie);
@@ -67,22 +68,19 @@ function PlayVideo(videoId) {
 }
 
 function EntertainmentDetails() {
-    //var journeyData = {
-    //    journeyBusId: "56043a5c361ffe41bd662044" //$("#txtFrom").val().trim()
-    //};
+   
     $.ajax({
-        method: 'GET',
-        url: _apiBaseUrl + '/box/media?bus_identifier=1',
-        //data: journeyData,
+        type: 'GET',
+        url: _apiBaseUrl + '/box/media?bus_identifier=1',       
         dataType: "json",
         success: dataParserEntertainmentDetails,
         error: ServiceError
     });
 
     function dataParserEntertainmentDetails(data) {
-        if (data != null || data != undefined) {
+        if (data != null || data != undefined && data != "") {
             $.each(data, function (i, item) {
-                alert("rh");
+                
             });
         }
     }
@@ -91,7 +89,6 @@ function EntertainmentDetails() {
 /**
 * END
  */
-
 
 /**
  * Created by Indresh Singh for music player on 27/10/15.
@@ -111,7 +108,10 @@ var playlist = [
         title: "More Good Days"
     },
     {
-
+        url: "http://www.scottandrew.com/mp3/syfy/01%20-%20Scott%20Andrew%20-%20More%20Good%20Days.mp3",
+        title: "More Good Days"
+    },
+    {
         url: "http://www.scottandrew.com/mp3/syfy/01%20-%20Scott%20Andrew%20-%20More%20Good%20Days.mp3",
         title: "More Good Days"
     }
